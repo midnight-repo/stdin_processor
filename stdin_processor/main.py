@@ -1,0 +1,51 @@
+import typer
+import sys
+import os
+
+# This is for testing ===================
+d = '/'.join(os.getcwd().split('/')[:-1])
+sys.path.append(d)
+# =======================================
+
+
+package_path = '/'.join(__file__.split('/')[:-1])
+
+
+# this is for testing ===========
+if package_path == '':
+    package_path = os.getcwd()
+# ===============================
+
+imports = {}
+for file in os.listdir(package_path):
+    if file.endswith('_command.py'):
+        i = file[:-3]
+        f = file.split('_')[0]
+        i = __import__(i, fromlist=[f])
+        imports[f] = getattr(i, f)
+
+
+def run():
+    app = typer.Typer()
+    decorate = app.command()
+    [decorate(func) for func in imports.values()]
+    app()
+
+
+
+
+if __name__ == '__main__':
+    run()
+
+
+
+
+
+# TODO : remove
+#  charset needs to be capable of reading special chars \n \t \r and eventually others
+#  clean code after removing ? ex if removes 0 from a line containing only 0 -> empty line
+
+
+# TODO: replace --where argument from List to List[Path]
+# TODO : replace --sep argument from List to List[Path]
+
