@@ -9,21 +9,21 @@ from pathlib import Path
 
 def _remove(line, **kwargs):
     charset = kwargs.get('charset', None)
-    strings = kwargs.get('strings', None)
-    reg_expressions = kwargs.get('reg_expressions', None)
+    # strings = kwargs.get('strings', None)
+    regular_expressions = kwargs.get('reg_expressions', None)
     ignore_case = kwargs.get('ignore_case', False)
 
     s = line
 
-    if reg_expressions:
-        for regex in reg_expressions:
+    if regular_expressions:
+        for regex in regular_expressions:
             matches = re.compile(regex, re.IGNORECASE) if ignore_case else re.compile(regex)
             s = matches.sub('', s)
 
-    if strings:
-        for string in strings:
-            matches = re.compile(re.escape(backslashed(string)), re.IGNORECASE) if ignore_case else re.compile(re.escape(backslashed(string)))
-            s = matches.sub('', s)
+    # if strings:
+    #     for string in strings:
+    #         matches = re.compile(re.escape(backslashed(string)), re.IGNORECASE) if ignore_case else re.compile(re.escape(backslashed(string)))
+    #         s = matches.sub('', s)
 
     if charset:
         bs_charset = backslashed(charset)
@@ -35,7 +35,7 @@ def _remove(line, **kwargs):
 
 
 def remove(regex: List[Path,] = typer.Option(None, '--regex', '-r', metavar='REGEX', help='The regexes to remove from stdin. Can be used multiple times'),
-           strings: List[Path] = typer.Option(None, '--string', '-s', metavar='STRING', help='Remove string from stdin. Can be used multiple times'),
+           # strings: List[Path] = typer.Option(None, '--string', '-s', metavar='STRING', help='Remove string from stdin. Can be used multiple times'),
            charset: str = typer.Option(None, '--charset', '-c', metavar='STRING', help='The charset to remove from stdin'),
            remove_ignore_case: bool = typer.Option(False, '--ic', '--rI', help='Ignore case for targets to remove, do not confuse with -I that is used with global option --where'),
            clean: bool = typer.Option(True, '--clean/--no-clean', '-c/--nc', help='Don\'t print lines that are empty after removal'),
@@ -54,8 +54,11 @@ def remove(regex: List[Path,] = typer.Option(None, '--regex', '-r', metavar='REG
            ):
 
 
+
     stdin = STDIN()
-    stdin.process(lambda x: _remove(x, reg_expressions=map(lambda posisxp: posisxp.name, regex), strings=map(lambda posisxp: posisxp.name, strings), charset=charset, ignore_case=remove_ignore_case),
+    # add this and uncomment in _remove() function to add support for strings
+    # strings = map(lambda posisxp: posisxp.name, strings)
+    stdin.process(lambda x: _remove(x, reg_expressions=map(lambda posisxp: posisxp.name, regex), charset=charset, ignore_case=remove_ignore_case),
                   separators=separators,
                   group_by=group_by,
                   group_join=group_join,
