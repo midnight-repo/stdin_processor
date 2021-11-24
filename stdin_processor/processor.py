@@ -20,19 +20,6 @@ def backslashed(string):
     return s
 
 
-# WHAT IT DOES : Generates a regex that can be used by re.split() to split a string by multiple separators
-# HOW IT WORKS : Escaoes every character that is used in the regex synthax, this is used to neutralize regex operators in the separators
-# joins with the OR regex operator "|"
-# returns a regex like : escaped_separator|escaped_separator|escaped_separator
-def regex_escape(*separators):
-    regex_synthax_chars = list('[]{}^$.*?!,-|') + ['\d', '\D', '\w', '\W', '\s', '\S']
-
-    escaped_separators = []
-    for separator in separators:
-        escaped_separator = ''.join(map(lambda x: '\\' + x if x in regex_synthax_chars else x, list(separator)))
-        escaped_separators.append(escaped_separator)
-
-    return '|'.join(escaped_separators)
 
 
 
@@ -55,7 +42,6 @@ def parse_index_pattern(target_list, index_pattern):
                 index = int(index)
                 if not index in indexed:
                     indexed.append(index)
-
 
             else:
 
@@ -108,10 +94,14 @@ class STDIN():
 
 
     # WHAT IT DOES : splits self.value by one or more separators
+    # HOW IT WORKS : joins the regex escaped separators with 'OR' regex operator : '|'
+    # returns a regex like : escaped_separator|escaped_separator|escaped_separator
+    # split with re.split(regex)
     def split(self, *separators):
         stdin = self.value
         backslashed_separators = map(backslashed, separators)
-        split_stdin = re.split(regex_escape(*backslashed_separators), stdin)
+        regex_pattern = '|'.join([re.escape(separator) for separator in backslashed_separators])
+        split_stdin = re.split(regex_pattern, stdin)
 
         while '' in split_stdin: split_stdin.remove('')
 
@@ -323,6 +313,7 @@ class STDIN():
         self.join(joiner)
 
         return self.value
+
 
 
 
