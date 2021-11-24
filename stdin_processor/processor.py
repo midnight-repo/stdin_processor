@@ -36,7 +36,72 @@ def regex_escape(*separators):
 
 
 
+# WHAT IT DOES : parses pattern index and returns a list containing targetted indexes
+def parse_index_pattern(target_list, index_pattern):
+    try:
+        # this is just in case of spaces in the pattern
+        patterns = [x for x in index_pattern.replace(' ', '').split(',')]
 
+        while '' in patterns: patterns.remove('')
+
+        list_length = len(target_list)
+        indexed = []
+        for pattern in patterns:
+            index = pattern
+
+            if not ':' in index:
+                if '-' in index:
+                    index = list_length - int(index.replace('-', ''))
+                index = int(index)
+                if not index in indexed:
+                    indexed.append(index)
+
+
+            else:
+
+                # :-2
+                if index.startswith(':'):
+                    index = index.replace(':', '')
+                    if '-' in index:
+                        index = list_length - int(index.replace('-', ''))
+                    for i in range(0, int(index)):
+                        if not i in indexed:
+                            indexed.append(i)
+
+                # 5:
+                elif index.endswith(':'):
+                    index = index.replace(':', '')
+                    if '-' in index:
+                        index = list_length - int(index.replace('-', ''))
+                    for i in range(int(index), list_length):
+                        if not i in indexed:
+                            indexed.append(i)
+
+                # 7:12
+                else:
+                    start = index.split(':')[0]
+                    if '-' in start:
+                        start = list_length - int(start.replace('-', ''))
+
+                    end = index.split(':')[1]
+                    if '-' in end:
+                        end = list_length - int(end.replace('-', ''))
+
+                    for i in range(int(start), int(end)):
+                        if not i in indexed:
+                            indexed.append(i)
+
+
+        return sorted(indexed)
+
+    except:
+        typer.echo(typer.style('Invalid index pattern', typer.colors.RED))
+        exit()
+
+
+
+
+# This class represents standard input and contains methods to manipulate it
 class STDIN():
     def __init__(self):
         self.value = sys.stdin.read()
@@ -94,12 +159,11 @@ class STDIN():
     #   - one special character
 
     # HOW IT WORKS :
-    #   - creates a list of each of the categories mentionned above
-    #   - sends each element of stdin to its corresponding list
-    #   -
+    #   - categorizes each element to a category
+    #   - sorts each category
+    #   - appends each sorted category to the final list in the order mentioned in the pattern
     def sort(self, order_pattern):
 
-        elements = self.value
 
         if order_pattern == False:  # keep it as a string since cannot address value when typer argument is bool
             return
@@ -107,16 +171,16 @@ class STDIN():
             typer.echo(typer.style("The sort pattern should contain 4 characters", fg=typer.colors.RED))
             exit()
 
-        special_chars = [char for char in chars.printable if not char in chars.ascii_letters + chars.digits]
-
         # check if valid pattern
-        p = []
+        special_chars = [char for char in chars.printable if not char in chars.ascii_letters + chars.digits]
+        pattern_categories = []
         for char in order_pattern:
-            if char in special_chars: p.append('special_chars')
-            elif char.isupper(): p.append('upper')
-            elif char.islower(): p.append('lower')
-            elif char.isdigit(): p.append('digits')
+            if char in special_chars: pattern_categories.append('special_chars')
+            elif char.isupper(): pattern_categories.append('upper')
+            elif char.islower(): pattern_categories.append('lower')
+            elif char.isdigit(): pattern_categories.append('digits')
         if all(x in p for x in ['special_chars', 'upper', 'lower', 'digits']):
+            elements = self.value
 
             categories = {
                 'special_chars': [x for x in chars.printable if not x in chars.ascii_letters + chars.digits],
@@ -127,7 +191,7 @@ class STDIN():
 
             # categorise input elements
             sorted_categories = {}
-            for category in p:
+            for category in pattern_categories:
                 l = []
                 for element in elements:
                     if len(element) != 0:
@@ -137,7 +201,7 @@ class STDIN():
 
             # return in order
             sorted_elements = []
-            for category in p:
+            for category in pattern_categories:
                 if sorted_categories[category]:
                     sorted_elements += sorted_categories[category]
 
@@ -149,9 +213,9 @@ class STDIN():
             exit()
 
 
-    # WHAT IT DOES : flags the input elements that match the regex passed to --where and --not
+    # WHAT IT DOES : flags the input elements that match the regex passed to --where and --not and --keep
     # HOW IT WORKS :
-    #   -
+    #   for each element of stdin, return a tuple (keep_or_not: bool, matched_or_not: bool, element_value: str)
     def where(self, regex, ignore_case, **kwargs):
         keep = kwargs.get('keep', True)
         _not = kwargs.get('_not', False)
@@ -177,89 +241,32 @@ class STDIN():
     # WHAT IT DOES : flags the elements of input if they correspond to the indexes mentionned in the --index option
     # Doesn't change the order even if --indexes is not ordered
     # HOW IT WORKS:
-    #   -
-    def indexes(self, indexes, **kwargs):
+    #   - creates a list containing targetted indexes (indexed)
+    #   - for i in range(len(stdin)) if i in indexed flag stdin[i]
+    #   - negative indexes are converted their positive index equivalent
+    def indexes(self, index_pattern, **kwargs):
         keep = kwargs.get('keep', True)
         _not = kwargs.get('_not', False)
 
-        try:
-            patterns = [x for x in indexes.replace(' ', '').split(',')]
+        indexed = parse_index_pattern(self.value, index_pattern)
+        matched = []
+        for i in range(len(self.value)):
+            match = i in indexed
+            if _not:
+                match = not match
 
-            # To not have duplicates but still keep the same order, we parse the indexes and add them in a sorted array
-            # ex : [5:10] becomes [5,6,7,8,9]
-            stdin_length = len(self.value)
-            indexed = []
-            for pattern in patterns:
-                index = pattern
+            matched.append({'value': self.value[i]['value'],
+                            'keep': True if match else keep,
+                            'match': True if match else False})
 
-                if not ':' in index:
-                    if not int(index) in indexed:
-                        if '-' in index:
-                            index = stdin_length + 1 - int(index.replace('-', ''))
-                        indexed.append(index)
+        self.value = matched
+        return self.value
 
-
-                else:
-
-                    # :-2
-                    if index.startswith(':'):
-                        index = index.replace(':', '')
-                        if '-' in index:
-                            index = stdin_length + 1 - int(index.replace('-', ''))
-                        for i in range(0, int(index)):
-                            if not i in indexed:
-                                indexed.append(i)
-
-                    # 5:
-                    elif index.endswith(':'):
-                        index = index.replace(':', '')
-                        if '-' in index:
-                            index = stdin_length + 1 - int(index.replace('-', ''))
-                        for i in range(int(index), stdin_length):
-                            if not i in indexed:
-                                indexed.append(i)
-
-                    # 7:12
-                    else:
-                        start = index.split(':')[0]
-                        if '-' in start:
-                            start = stdin_length + 1 - int(start.replace('-', ''))
-
-                        end = index.split(':')[1]
-                        if '-' in end:
-                            end = stdin_length + 1 - int(end.replace('-', ''))
-
-                        for i in range(int(start), int(end)):
-                            if not i in indexed:
-                                indexed.append(i)
-
-
-
-            matched = []
-            for i in range(len(self.value)):
-                match = i in indexed
-                if _not:
-                    match = not match
-
-                matched.append({'value': self.value[i]['value'],
-                                'keep': True if match else keep,
-                                'match': True if match else False})
-
-            self.value = matched
-            return self.value
-
-
-        except Exception as e:
-            raise e
-            typer.echo(e)
-            typer.echo(typer.style('Something\'s wrong with the index pattern or you tried to process a sub element that does not exist', fg=typer.colors.RED))
-            exit()
 
 
 
     def map(self, func):
 
-        #TODO: maybe think about what if func takes more than 1 parameter
         processed = []
         for element in self.value:
             if element['keep'] == True:
@@ -291,13 +298,16 @@ class STDIN():
 
 
         self.split(*separators)
+
         if group_by > 1:
             self.group_by(group_by, group_join)
 
+        # before or after processing ?
         if sort != 'False':
             self.sort(sort)
 
         if where == '.*\n*\r*\t*':
+            # need to be done to be passed corectly to indexes who takes flagged input
             self.value = [{'value': x, 'keep': True, 'match': True} for x in self.value]
         else:
             self.where(where, ignore_case, keep=keep, _not=_not)
@@ -311,15 +321,8 @@ class STDIN():
             self.remove_duplicates()
 
         self.join(joiner)
+
         return self.value
 
 
-#
-# stdin = STDIN()
-# s = stdin.split('\n', '\t')
-# s = stdin.group_by(2, '::::')
-# s = stdin.join('\t')
-#
-# print(s)
 
-# TODO: clean the code for sorted
