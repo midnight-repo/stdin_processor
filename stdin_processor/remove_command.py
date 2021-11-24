@@ -1,19 +1,29 @@
+import re
+
 import typer
-from typing import List
+from typing import List, Tuple
 from stdin_processor.processor import STDIN
 from stdin_processor import global_args
 from stdin_processor.processor import backslashed
+from pathlib import Path
 
-def _remove(line, *strings, **kwargs):
+def _remove(line, **kwargs):
     charset = kwargs.get('charset', None)
+    strings = kwargs.get('strings', None)
+    reg_expressions = kwargs.get('reg_expressions', None)
+    ignore_case = kwargs.get('ignore_case', False)
 
     s = line
 
-    if len(strings) == 0:
-        pass
-    else:
+    if reg_expressions:
+        for regex in reg_expressions:
+            matches = re.compile(regex, re.IGNORECASE) if ignore_case else re.compile(regex)
+            s = matches.sub('', s)
+
+    if strings:
         for string in strings:
-            s = s.replace(backslashed(string), '')
+            matches = re.compile(re.escape(backslashed(string)), re.IGNORECASE) if ignore_case else re.compile(re.escape(backslashed(string)))
+            s = matches.sub('', s)
 
     if charset:
         bs_charset = backslashed(charset)
@@ -24,9 +34,10 @@ def _remove(line, *strings, **kwargs):
 
 
 
-def remove(charset: str = typer.Option(None, '--charset', '-c', metavar='STRING', help='The charset to remove from stdin'),
-           strings: List[str] = typer.Option([], '--string', '-s', metavar='STRING', help='Remove string from stdin'),
-
+def remove(regex: List[Path,] = typer.Option(None, '--regex', '-r', metavar='REGEX', help='The regexes to remove from stdin'),
+           strings: List[Path] = typer.Option(None, '--string', '-s', metavar='STRING', help='Remove string from stdin'),
+           charset: str = typer.Option(None, '--charset', '-c', metavar='STRING', help='The charset to remove from stdin'),
+           remove_ignore_case: bool = typer.Option(False, '--ic', '--rI', help='Ignore case for targets to remove, do not confuse with -I that is used with global option --where'),
            ____________________________: str = global_args.args_separator,
            separators: List[str] = global_args.separators,
            group_by: int = global_args.group_by,
@@ -42,8 +53,10 @@ def remove(charset: str = typer.Option(None, '--charset', '-c', metavar='STRING'
            ):
 
 
+    for r in map(lambda r: r.name, regex):
+        print(r)
     stdin = STDIN()
-    stdin.process(lambda x: _remove(x, *strings, charset=charset),
+    stdin.process(lambda x: _remove(x, reg_expressions=map(lambda posisxp: posisxp.name, regex), strings=map(lambda posisxp: posisxp.name, strings), charset=charset, ignore_case=remove_ignore_case),
                   separators=separators,
                   group_by=group_by,
                   group_join=group_join,

@@ -44,10 +44,11 @@ if __name__ == '__main__':
 
 
 # TODO : remove
-#  charset needs to be capable of reading special chars \n \t \r and eventually others
 #  clean code after removing ? ex if removes 0 from a line containing only 0 -> empty line
+#  add backslashed to regex ?
 
 
 # TODO: replace --where argument from List to List[Path]
 # TODO : replace --sep argument from List to List[Path]
+#
 
