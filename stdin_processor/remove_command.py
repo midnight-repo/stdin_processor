@@ -34,8 +34,8 @@ def _remove(line, **kwargs):
 
 
 
-def remove(regex: List[Path,] = typer.Option(None, '--regex', '-r', metavar='REGEX', help='The regexes to remove from stdin'),
-           strings: List[Path] = typer.Option(None, '--string', '-s', metavar='STRING', help='Remove string from stdin'),
+def remove(regex: List[Path,] = typer.Option(None, '--regex', '-r', metavar='REGEX', help='The regexes to remove from stdin. Can be used multiple times'),
+           strings: List[Path] = typer.Option(None, '--string', '-s', metavar='STRING', help='Remove string from stdin. Can be used multiple times'),
            charset: str = typer.Option(None, '--charset', '-c', metavar='STRING', help='The charset to remove from stdin'),
            remove_ignore_case: bool = typer.Option(False, '--ic', '--rI', help='Ignore case for targets to remove, do not confuse with -I that is used with global option --where'),
            ____________________________: str = global_args.args_separator,
