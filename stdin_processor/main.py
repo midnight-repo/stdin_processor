@@ -2,26 +2,28 @@ import typer
 import sys
 import os
 
-# This is for testing ===================
-d = '/'.join(os.getcwd().split('/')[:-1])
-sys.path.append(d)
-# =======================================
 
 
 package_path = '/'.join(__file__.split('/')[:-1])
 
 
-# this is for testing ===========
+
+# This is for testing ===========================
+d = '/'.join(os.getcwd().split('/')[:-1])
+sys.path.append(d)
+
 if package_path == '':
     package_path = os.getcwd()
-# ===============================
+# ===============================================
 
+
+# import commands
 imports = {}
 for file in os.listdir(package_path):
     if file.endswith('_command.py'):
         i = file[:-3]
         f = file.split('_')[0]
-        i = __import__(i, fromlist=[f])
+        i = __import__(f'stdin_processor.{i}', fromlist=[f])
         imports[f] = getattr(i, f)
 
 
