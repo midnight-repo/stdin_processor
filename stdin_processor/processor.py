@@ -155,7 +155,7 @@ class STDIN():
     def sort(self, order_pattern):
 
 
-        if order_pattern == False:  # keep it as a string since cannot address value when typer argument is bool
+        if order_pattern == 'False':  # keep it as a string since cannot address value when typer argument is bool
             return
         elif len(order_pattern) != 4:
             typer.echo(typer.style("The sort pattern should contain 4 characters", fg=typer.colors.RED))
@@ -169,7 +169,7 @@ class STDIN():
             elif char.isupper(): pattern_categories.append('upper')
             elif char.islower(): pattern_categories.append('lower')
             elif char.isdigit(): pattern_categories.append('digits')
-        if all(x in p for x in ['special_chars', 'upper', 'lower', 'digits']):
+        if all(x in pattern_categories for x in ['special_chars', 'upper', 'lower', 'digits']):
             elements = self.value
 
             categories = {
