@@ -26,7 +26,7 @@ def strip(left: bool = typer.Option(True, '--left/--no-left', '-l/--nl', help='S
            unique: bool = global_args.unique,
            sort: str = global_args.sort,
            keep: bool = global_args.keep,
-           where: str = global_args.where,
+           where: List[str] = global_args.where,
            indexes: str = global_args.index,
            _not: bool = global_args._not,
            ignore_case: bool = global_args.ignore_case

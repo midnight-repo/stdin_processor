@@ -13,7 +13,7 @@ def hide(
         unique: bool = global_args.unique,
         sort: str = global_args.sort,
         keep: bool = typer.Option(False, '--keep/--no-keep', '-k/--nk', help='Keep the elements that that did not match --where or --index'),
-        where: str = global_args.where,
+        where: List[str] = global_args.where,
         indexes: str = global_args.index,
         _not: bool = typer.Option(True, '--not', '-n', help='What is matched is not and what is not is matched. Use with --where or --index'),
         ignore_case: bool = global_args.ignore_case

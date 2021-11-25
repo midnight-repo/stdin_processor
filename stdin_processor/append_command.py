@@ -3,7 +3,6 @@ from typing import List
 from stdin_processor.processor import STDIN
 from stdin_processor import global_args
 
-
 def append(suffix: str = typer.Argument(..., help='The suffix to append to every element of stdin'),
 
            ____________________________: str = global_args.args_separator,

@@ -14,7 +14,7 @@ def prepend(prefix: str = typer.Argument(..., help='The prefix to prepend to eve
            unique: bool = global_args.unique,
            sort: str = global_args.sort,
            keep: bool = global_args.keep,
-           where: str = global_args.where,
+           where: List[str] = global_args.where,
            indexes: str = global_args.index,
            _not: bool = global_args._not,
            ignore_case: bool = global_args.ignore_case

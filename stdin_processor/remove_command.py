@@ -47,7 +47,7 @@ def remove(regex: List[Path,] = typer.Option(None, '--regex', '-r', metavar='REG
            unique: bool = global_args.unique,
            sort: str = global_args.sort,
            keep: bool = global_args.keep,
-           where: str = global_args.where,
+           where: List[str] = global_args.where,
            indexes: str = global_args.index,
            _not: bool = global_args._not,
            ignore_case: bool = global_args.ignore_case
