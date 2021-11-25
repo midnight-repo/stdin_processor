@@ -1,6 +1,6 @@
 import typer
 
-#/!\ ADDING typer.style() instead of ARGS MAKES THEM NOT DETECTABLE BY ARPARSER !
+#/!\ ADDING typer.style() instead of ARGS MAKES THEM NOT DETECTABLE BY ARGPARSER !
 
 
 separators = typer.Option(['\n'],
@@ -66,11 +66,6 @@ sort = typer.Option('False',
 
 
 
-args_separator = typer.Option('',
-                              typer.style('=========  The options listed below are common to all commands  =========', fg=typer.colors.BRIGHT_WHITE),
-                              show_default=False,
-                              metavar='')
-
 
 
 index = typer.Option('0:',
@@ -81,3 +76,8 @@ index = typer.Option('0:',
                      metavar='INDEXES')
 
 
+
+args_separator = typer.Option('',
+                              typer.style('=========  The options listed below are common to all commands  =========', fg=typer.colors.BRIGHT_WHITE),
+                              show_default=False,
+                              metavar='')

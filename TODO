@@ -4,8 +4,8 @@ add regex support for --sep
 sort(key=REGEX) : sorts lines depending of what matches the provided regex
 add reverse command
 add split command
-
-
+add dict option to replace command
+add options to --wrap : --quotes --double-quotes --brackets --curly-brackets --parentheses
 
 
 recheck help messages for each command
