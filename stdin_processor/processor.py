@@ -206,15 +206,21 @@ class STDIN():
     # WHAT IT DOES : flags the input elements that match the regex passed to --where and --not and --keep
     # HOW IT WORKS :
     #   for each element of stdin, return a dict{keep_or_not: bool, matched_or_not: bool, element_value: str}
-    def where(self, regex, ignore_case, **kwargs):
+    def where(self, *regex, ignore_case, **kwargs):
         keep = kwargs.get('keep', True)
         _not = kwargs.get('_not', False)
 
         matched = []
-        condition = re.compile(regex, re.IGNORECASE) if ignore_case else re.compile(regex)
 
         for element in self.value:
-            match = condition.match(element)
+            match = False
+            for exp in regex:
+                condition = re.compile(exp, re.IGNORECASE) if ignore_case else re.compile(exp)
+                if condition.search(element):
+                    match = True
+                    continue
+
+
             if _not == True:
                 match = not match
 
@@ -279,7 +285,7 @@ class STDIN():
         unique = kwargs.get('unique', False)
         sort = kwargs.get('sort', False)
         keep = kwargs.get('keep', '')
-        where = kwargs.get('where', '.*|\n*|\r*|\t*')
+        where = kwargs.get('where', ['.*|\n*|\r*|\t*'])
         indexes = kwargs.get('indexes', '0:')
         _not = kwargs.get('_not', False)
         ignore_case = kwargs.get('ignore_case', False)
@@ -296,11 +302,11 @@ class STDIN():
         if sort != 'False':
             self.sort(sort)
 
-        if where == '.*\n*\r*\t*':
+        if where == ['.*\n*\r*\t*']:
             # need to be done to be passed corectly to indexes who takes flagged input
             self.value = [{'value': x, 'keep': True, 'match': True} for x in self.value]
         else:
-            self.where(where, ignore_case, keep=keep, _not=_not)
+            self.where(*where, ignore_case=ignore_case, keep=keep, _not=_not)
 
         if indexes != '0:':
             self.indexes(indexes, keep=keep, _not=_not)

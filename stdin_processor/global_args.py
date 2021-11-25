@@ -32,7 +32,7 @@ group_by = typer.Option(1,
                          metavar='GROUP_SIZE',
                          help='Chunks stdin elements by groups of a defined size')
 
-where = typer.Option('.*\n*\r*\t*',
+where = typer.Option(['.*\n*\r*\t*'],
                      '--where',
                      '-w',
                      metavar='REGEX',
