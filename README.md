@@ -19,3 +19,7 @@ Check if successful :
 sp --help
 ```
 
+[OPTIONAL] Install tab auto-completion for your shell
+```
+sp --install-completion bash|zsh|fish|powershell|pwsh
+```
