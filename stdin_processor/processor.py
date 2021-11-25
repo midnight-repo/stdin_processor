@@ -205,7 +205,7 @@ class STDIN():
 
     # WHAT IT DOES : flags the input elements that match the regex passed to --where and --not and --keep
     # HOW IT WORKS :
-    #   for each element of stdin, return a tuple (keep_or_not: bool, matched_or_not: bool, element_value: str)
+    #   for each element of stdin, return a dict{keep_or_not: bool, matched_or_not: bool, element_value: str}
     def where(self, regex, ignore_case, **kwargs):
         keep = kwargs.get('keep', True)
         _not = kwargs.get('_not', False)
@@ -254,7 +254,7 @@ class STDIN():
 
 
 
-
+    # process the elements that are flagged with match=True
     def map(self, func):
 
         processed = []
