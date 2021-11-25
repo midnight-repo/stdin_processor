@@ -5,3 +5,8 @@ sort(key=REGEX) : sorts lines depending of what matches the provided regex
 add reverse command
 add split command
 add upper and lower commands
+
+
+
+
+recheck help messages for each command
