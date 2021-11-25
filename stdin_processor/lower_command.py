@@ -4,8 +4,7 @@ from stdin_processor.processor import STDIN
 from stdin_processor import global_args
 
 
-def lower(suffix: str = typer.Argument(..., help='The suffix to append to every element of stdin'),
-
+def lower(
            ____________________________: str = global_args.args_separator,
            separators: List[str] = global_args.separators,
            group_by: int = global_args.group_by,
