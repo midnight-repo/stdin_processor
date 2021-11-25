@@ -203,7 +203,7 @@ class STDIN():
             exit()
 
 
-    # WHAT IT DOES : flags the input elements that match the regex passed to --where and --not and --keep
+    # WHAT IT DOES : flags the input elements that match the regex passed to --where depending on --not and --keep
     # HOW IT WORKS :
     #   for each element of stdin, return a dict{keep_or_not: bool, matched_or_not: bool, element_value: str}
     def where(self, *regex, ignore_case, **kwargs):
@@ -298,7 +298,7 @@ class STDIN():
         if group_by > 1:
             self.group_by(group_by, group_join)
 
-        # before or after processing ?
+        # before or after processing ? if prepend for exemple
         if sort != 'False':
             self.sort(sort)
 
