@@ -1,0 +1,68 @@
+import typer
+from typing import List
+from stdin_processor.processor import STDIN
+from stdin_processor import global_args
+
+
+i = 0
+enum_initialized = False
+def _enum(line: str, start: int, bound: int, **kwargs):
+    beginning = kwargs.get('beginning', True)
+    ending = kwargs.get('ending', False)
+    num_format = kwargs.get('num_format', ' ')
+
+    l = line
+    global i
+    global enum_initialized
+
+
+    if enum_initialized == False:
+        i = start
+        enum_initialized = True
+    else:
+        if beginning: l = str(i) + num_format + l
+        if ending: l = l + num_format + str(i)
+        i += bound
+
+    return l
+
+
+
+
+def enum(start: int = typer.Option(0, metavar='START', help='Starts to enumerate from START'),
+         beginning: bool = typer.Option(True, '--beginning/--no-beginning', '--beg/--nb', help='Adds the number at the begenning of the line'),
+         ending: bool = typer.Option(False, '--ending/--no-ending', '-e/--ne', help='Adds the number at the end of the line'),
+         bound: int = typer.Option(1, '--bound', '-b', metavar='BOUND', help='Increase by BOUND for each line'),
+         format: str = typer.Option(' ', '--format', '-f', metavar='STR', show_default=False, help='String to add after number if --beginning or before number if --ending [default: " "]'),
+
+         ____________________________: str = global_args.args_separator,
+         separators: List[str] = global_args.separators,
+         group_by: int = global_args.group_by,
+         group_join: str = global_args.group_join,
+         join: str = global_args.join,
+         unique: bool = global_args.unique,
+         sort: str = global_args.sort,
+         keep: bool = global_args.keep,
+         where: str = global_args.where,
+         indexes: str = global_args.index,
+         _not: bool = global_args._not,
+         ignore_case: bool = global_args.ignore_case
+         ):
+
+
+
+    stdin = STDIN()
+    stdin.process(lambda x: _enum(x, start, bound, beginning=beginning, ending=ending, num_format=format),
+                  separators=separators,
+                  group_by=group_by,
+                  group_join=group_join,
+                  unique=unique,
+                  sort=sort,
+                  keep=keep,
+                  where=where,
+                  _not=_not,
+                  ignore_case=ignore_case,
+                  indexes=indexes,
+                  joiner=join)
+
+    print(stdin.value, end='\n' if '\n' in separators else '')
