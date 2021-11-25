@@ -1,0 +1,4 @@
+add multiple values for --where, if possible --where val1 val2 instead of --where val1 --where val2
+same for --sep
+add regex support for --sep
+sort(key=REGEX) : sorts lines depending of what matches the provided regex
