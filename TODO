@@ -1,6 +1,8 @@
 
-same for --sep
-add regex support for --sep
+
+#add regex support for --sep NOT REALLY USEFUL ?
+
+
 sort(key=REGEX) : sorts lines depending of what matches the provided regex
 
 add split command
@@ -8,3 +10,24 @@ add dict option to replace command
 
 add encode commands
 recheck help messages for each command
+
+
+# REGEX-SEP
+    def split(self, *separators):
+        stdin = self.value
+        backslashed_separators = list(map(backslashed, separators))
+        captured_separators = list(map(lambda x: f'({x})', backslashed_separators))
+        regex_pattern = '|'.join(captured_separators)
+
+        split_stdin = re.split(regex_pattern, stdin)
+
+        while '' in split_stdin: split_stdin.remove('')
+
+        print('BACKSLASHED SEPARATORS : ', backslashed_separators)
+        print('CAPTURED SEPARATORS : ', captured_separators)
+        print('SPLIT_REGEX : ', regex_pattern)
+        print(split_stdin)
+        print()
+
+        self.value = split_stdin
+        return self.value
