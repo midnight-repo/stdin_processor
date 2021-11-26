@@ -1,17 +1,12 @@
 
 
-#add regex support for --sep NOT REALLY USEFUL ?
-
-
-sort(key=REGEX) : sorts lines depending of what matches the provided regex
-
 add split command
 add dict option to replace command
-
 add encode commands
 recheck help messages for each command
 
 
+#add regex support for --sep NOT REALLY USEFUL ?
 # REGEX-SEP
     def split(self, *separators):
         stdin = self.value
