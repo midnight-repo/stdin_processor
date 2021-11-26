@@ -12,6 +12,7 @@ def hide(
         join: str = global_args.join,
         unique: bool = global_args.unique,
         sort: str = global_args.sort,
+        sort_key: str = global_args.sort_key,
         keep: bool = typer.Option(False, '--keep/--no-keep', '-k/--nk', help='Keep the elements that that did not match --where or --index'),
         where: List[str] = global_args.where,
         indexes: str = global_args.index,
@@ -27,6 +28,7 @@ def hide(
                   group_join=group_join,
                   unique=unique,
                   sort=sort,
+                  sort_key=sort_key,
                   keep=keep,  # True MAKES NO SENSE IN SHOW COMMAND
                   where=where,
                   _not=_not, # difference with show

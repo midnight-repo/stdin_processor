@@ -65,7 +65,9 @@ sort = typer.Option('False',
                     help='Sort stdin with PATTERN. PATTERN should contain 4 characters, one of each of those type: <digit>, <special character>, <uppercase character>, <lowercase character> [ex: !Xx3 or Hr:8 or 9zP?]' )
 
 
-
+sort_key = typer.Option('',
+                   metavar='REGEX',
+                   help='Key to use when sorting. If used, the output will be sort depending on what the regex match on each element')
 
 
 index = typer.Option('0:',

@@ -152,8 +152,8 @@ class STDIN():
     #   - categorizes each element to a category
     #   - sorts each category
     #   - appends each sorted category to the final list in the order mentioned in the pattern
-    def sort(self, order_pattern):
-
+    def sort(self, order_pattern, **kwargs):
+        key_regex = kwargs.get('sort_key', None)
 
         if order_pattern == 'False':  # keep it as a string since cannot address value when typer argument is bool
             return
@@ -187,7 +187,15 @@ class STDIN():
                     if len(element) != 0:
                         if element[0] in categories[category]:
                             l.append(element)
-                sorted_categories[category] = sorted(l)
+
+                if key_regex and key_regex != '':
+                    k = {}
+                    for x in l:
+                        m = re.search(key_regex, x)
+                        k[x] = m[0] if m else x
+                    sorted_categories[category] = sorted(l, key=lambda x: k[x])
+                else:
+                    sorted_categories[category] = sorted(l)
 
             # return in order
             sorted_elements = []
@@ -284,6 +292,7 @@ class STDIN():
         group_join = kwargs.get('group_join')
         unique = kwargs.get('unique', False)
         sort = kwargs.get('sort', False)
+        key_regex = kwargs.get('key_regex', None)
         keep = kwargs.get('keep', '')
         where = kwargs.get('where', ['.*|\n*|\r*|\t*'])
         indexes = kwargs.get('indexes', '0:')
@@ -300,7 +309,7 @@ class STDIN():
 
         # before or after processing ? if prepend for exemple
         if sort != 'False':
-            self.sort(sort)
+            self.sort(sort,key_regex=key_regex)
 
         if where == ['.*\n*\r*\t*']:
             # need to be done to be passed corectly to indexes who takes flagged input
