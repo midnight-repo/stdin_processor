@@ -7,5 +7,5 @@ add split command
 add dict option to replace command
 add options to --wrap : --quotes --double-quotes --brackets --curly-brackets --parentheses
 
-
+add encode commands
 recheck help messages for each command
