@@ -19,7 +19,7 @@ def _encode(string, **kwargs):
         'hex': base64.b16encode
     }
 
-    if l == True:
+    if l:
         for e in encodings:
             print(e)
         exit()

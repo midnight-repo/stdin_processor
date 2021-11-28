@@ -21,7 +21,7 @@ def _decode(string, **kwargs):
         'hex': binascii.unhexlify
     }
 
-    if l == True:
+    if l:
         for e in encodings:
             print(e)
         exit()
