@@ -307,7 +307,7 @@ class STDIN():
         if group_by > 1:
             self.group_by(group_by, group_join)
 
-        # before or after processing ? if prepend for exemple
+        # before or after processing ? if prepend --where for exemple
         if sort != 'False':
             self.sort(sort,key_regex=key_regex)
 
