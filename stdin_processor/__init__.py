@@ -1,0 +1,3 @@
+import stdin_processor
+import stdin_processor.processor
+import stdin_processor.global_args
