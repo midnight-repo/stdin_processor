@@ -218,30 +218,50 @@ class STDIN():
     # WHAT IT DOES : flags the input elements that match the regex passed to --where depending on --not and --keep
     # HOW IT WORKS :
     #   for each element of stdin, return a dict{keep_or_not: bool, matched_or_not: bool, element_value: str}
-    def where(self, *regex, ignore_case, **kwargs):
+    def match(self, *regex, ignore_case, index_pattern, **kwargs):
         keep = kwargs.get('keep', True)
         _not = kwargs.get('_not', False)
 
-        matched = []
+        flagged = []
 
+
+        # WHERE
+        match_index = 0
         for element in self.value:
-            match = False
+            matched = False
             for exp in regex:
                 condition = re.compile(exp, re.IGNORECASE) if ignore_case else re.compile(exp)
                 if condition.search(element):
-                    match = True
+                    matched = True
                     continue
 
-
             if _not == True:
-                match = not match
+                matched = not matched
 
-            matched.append({'value': element,
-                            'keep': True if match else keep,
-                            'match': True if match else False})
+            flagged.append({'value': element,
+                            'keep': True if matched else keep,
+                            'match': True if matched else False,
+                            'match_index': match_index if matched else None})
+            if matched: match_index += 1
+
+        # INDEX
+        indexed = parse_index_pattern([x for x in flagged if x['match'] == True], index_pattern)
+        print(indexed)
+        for element in flagged:
+            matched = True if element['match_index'] in indexed else False
+            if matched:
+                element['match'] = True
+            else:
+                element['match'] = False
+
+        for i in range(len(flagged)):
+            flagged[i]['match'] = True if flagged[i]['match_index'] in indexed else False
+            print(flagged[i]['match_index'])
 
 
-        self.value = matched
+
+
+        self.value = flagged
         return self.value
 
 
@@ -252,23 +272,7 @@ class STDIN():
     #   - creates a list containing targetted indexes (indexed)
     #   - for i in range(len(stdin)) if i in indexed flag stdin[i]
     #   - negative indexes are converted their positive index equivalent
-    def indexes(self, index_pattern, **kwargs):
-        keep = kwargs.get('keep', True)
-        _not = kwargs.get('_not', False)
 
-        indexed = parse_index_pattern(self.value, index_pattern)
-        matched = []
-        for i in range(len(self.value)):
-            match = i in indexed
-            if _not:
-                match = not match
-
-            matched.append({'value': self.value[i]['value'],
-                            'keep': True if match else keep,
-                            'match': True if match else False})
-
-        self.value = matched
-        return self.value
 
 
 
@@ -313,14 +317,7 @@ class STDIN():
             self.group_by(group_by, group_join)
 
 
-        if where == ['.*\n*\r*\t*']:
-            # need to be done to be passed corectly to indexes who takes flagged input
-            self.value = [{'value': x, 'keep': True, 'match': True} for x in self.value]
-        else:
-            self.where(*where, ignore_case=ignore_case, keep=keep, _not=_not)
-
-        if indexes != '0:':
-            self.indexes(indexes, keep=keep, _not=_not)
+        self.match(*where, ignore_case=ignore_case, index_pattern=indexes, keep=keep, _not=_not)
 
         self.map(map_function)
 
