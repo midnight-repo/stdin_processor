@@ -117,11 +117,15 @@ The third step adds to each element with a "match" and "keep" flag, so the mappi
 
 This is technically done by converting an element, which at this point is a string, to a dictionnary with keys "match":bool, "keep":bool, "value":string value of the element
 
-For extra specificity, you can also only target individual or ranges of elements in the ones that matched.
+For extra specificity, you can also only target individual or ranges of elements in the ones that matched. You can use the --index global option, that reads python slicing patterns (without the brackets), comma separated.
+a[start:stop]  # items start through stop-1
+a[start:]      # items start through the rest of the array
+a[:stop]       # items from the beginning through stop-1
+a[:]           # a copy of the whole array
 
-Say you want to only process the three last elements that matched, you can use the --index global option, that reads [python slicing patterns](https://stackoverflow.com/questions/509211/understanding-slice-notation) (without the brackets), comma separated.
+If for exemple you want to process only the first (0), and the two last elements(-2:) that matched :
 
-    cat file.txt | sp <command> -i -3:
+    cat file.txt | sp <command> -i 0,-2:
 
   - Step 4 : MAPPING
 
