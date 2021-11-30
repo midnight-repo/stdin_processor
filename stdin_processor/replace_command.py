@@ -69,4 +69,4 @@ def replace(targets: List[Path] = typer.Argument(..., help='Regular expressions 
                   indexes=indexes,
                   joiner=join)
 
-    print(stdin.value)
+    print(stdin.value, end='' if stdin.value.endswith('\n') else '\n')

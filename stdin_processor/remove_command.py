@@ -79,4 +79,4 @@ def remove(regex: List[Path,] = typer.Option(None, '--regex', '-r', metavar='REG
         cleaned = join.join([x for x in stdin.value.split(join) if x != ''])
         print(cleaned)
     else:
-        print(stdin.value, end='\n' if '\n' in separators else '')
+        print(stdin.value, end='' if stdin.value.endswith('\n') else '\n')

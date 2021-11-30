@@ -36,4 +36,4 @@ def lower(
                   indexes=indexes,
                   joiner=join)
 
-    print(stdin.value, end='\n' if '\n' in separators else '')
+    print(stdin.value, end='' if stdin.value.endswith('\n') else '\n')
