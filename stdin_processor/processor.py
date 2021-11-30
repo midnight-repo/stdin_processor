@@ -215,9 +215,6 @@ class STDIN():
             exit()
 
 
-    # WHAT IT DOES : flags the input elements that match the regex passed to --where depending on --not and --keep
-    # HOW IT WORKS :
-    #   for each element of stdin, return a dict{keep_or_not: bool, matched_or_not: bool, element_value: str}
     def match(self, *regex, ignore_case, index_pattern, **kwargs):
         keep = kwargs.get('keep', True)
         _not = kwargs.get('_not', False)
@@ -246,7 +243,6 @@ class STDIN():
 
         # INDEX
         indexed = parse_index_pattern([x for x in flagged if x['match'] == True], index_pattern)
-        print(indexed)
         for element in flagged:
             matched = True if element['match_index'] in indexed else False
             if matched:
@@ -256,24 +252,9 @@ class STDIN():
 
         for i in range(len(flagged)):
             flagged[i]['match'] = True if flagged[i]['match_index'] in indexed else False
-            print(flagged[i]['match_index'])
-
-
-
 
         self.value = flagged
         return self.value
-
-
-
-    # WHAT IT DOES : flags the elements of input if they correspond to the indexes mentionned in the --index option
-    # Doesn't change the order even if --indexes is not ordered
-    # HOW IT WORKS:
-    #   - creates a list containing targetted indexes (indexed)
-    #   - for i in range(len(stdin)) if i in indexed flag stdin[i]
-    #   - negative indexes are converted their positive index equivalent
-
-
 
 
     # process the elements that are flagged with match=True
