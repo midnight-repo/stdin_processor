@@ -292,7 +292,7 @@ class STDIN():
 
     def process(self, map_function, **kwargs):
         separators = kwargs.get('separators', ['\n'])
-        clean = kwargs.get('clean', False)
+        clean = kwargs.get('clean', True)
         group_by = kwargs.get('group_by', 1)
         group_join = kwargs.get('group_join')
         unique = kwargs.get('unique', False)
