@@ -6,12 +6,16 @@ This tool aims to improve productivity by providing a simple yet complete toolbo
 
 It is fully written in python3, making it availiable on Linux, Windows, MacOS, and it's is based on typer, which is based on click, a famous library for creating command line tools.
 
-| Table of contents |
-| ----------------- |
-| [Installation](#installation) |
-| [Quick start](#quick-start) |
-| [How it works](#how-it-works) |
-| [Usage examples](#usage-examples) |
+[Installation](#installation)
+
+[Quick start](#quick-start)
+
+[How it works](#how-it-works)
+  - [STDIN shaping](#stdin-shaping)
+  - [Mapping](#mapping)
+  - [Detailed steps](#detailed-steps)
+
+[Usage examples](#usage-examples)
 
 
 
