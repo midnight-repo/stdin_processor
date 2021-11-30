@@ -10,7 +10,10 @@ separators = typer.Option(['\n'],
                    show_default=False,
                    help='The separator to use for stdin. This option can be used multiple times [default: "\\n"]')
 
-
+clean = typer.Option(False,
+                     '--clean/--no-clean',
+                     '-c/--nc',
+                     help="Remove empty elements")
 
 join = typer.Option('\n',
                    '--join',

@@ -97,13 +97,17 @@ class STDIN():
     # HOW IT WORKS : joins the regex escaped separators with 'OR' regex operator : '|'
     # returns a regex like : escaped_separator|escaped_separator|escaped_separator
     # split with re.split(regex)
-    def split(self, *separators):
+    def split(self, *separators, **kwargs):
+        clean = kwargs.get('clean', True)
+
         stdin = self.value
         backslashed_separators = map(backslashed, separators)
         regex_pattern = '|'.join([re.escape(separator) for separator in backslashed_separators])
         split_stdin = re.split(regex_pattern, stdin)
 
-        while '' in split_stdin: split_stdin.remove('')
+        if clean:
+            while '' in split_stdin:
+                split_stdin.remove('')
 
         self.value = split_stdin
         return self.value
@@ -288,6 +292,7 @@ class STDIN():
 
     def process(self, map_function, **kwargs):
         separators = kwargs.get('separators', ['\n'])
+        clean = kwargs.get('clean', False)
         group_by = kwargs.get('group_by', 1)
         group_join = kwargs.get('group_join')
         unique = kwargs.get('unique', False)
@@ -302,7 +307,7 @@ class STDIN():
 
 
 
-        self.split(*separators)
+        self.split(*separators, clean=clean)
 
         if group_by > 1:
             self.group_by(group_by, group_join)

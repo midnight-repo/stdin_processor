@@ -3,15 +3,8 @@ from typing import List
 from stdin_processor.processor import STDIN
 from stdin_processor import global_args
 
+
 def _wrap(string, **kwargs):
-    quote = kwargs.get('quote', None)
-    double_quote = kwargs.get('double_quote', None)
-    back_quote = kwargs.get('back_quote', None)
-    parentheses = kwargs.get('parentheses', None)
-    brackets = kwargs.get('brackets', None)
-    curly_brackets = kwargs.get('curly_brackets', None)
-    ltgt = kwargs.get('ltgt', None)
-    tag = kwargs.get('tag', None)
 
     s = string
 
@@ -23,7 +16,7 @@ def _wrap(string, **kwargs):
         'brackets': lambda x: f"[{x}]",
         'curly_brackets': lambda x: "{%s}" % x,
         'ltgt': lambda x: f"<{x}>",
-        'tag' : lambda x,tag: f"<{tag}>{x}</{tag}>"
+        'tag': lambda x, tag: f"<{tag}>{x}</{tag}>"
     }
 
     for element in kwargs:
@@ -49,20 +42,20 @@ def wrap(prefix: str = typer.Argument('', help='Prefix to add'),
          tag: List[str] = typer.Option([''], '--tag', '-t', metavar='TAG_NAME', help='Wraps element with <TAG_NAME> </TAG_NAME>. Can be used multiple times'),
 
          ____________________________: str = global_args.args_separator,
-           separators: List[str] = global_args.separators,
-           group_by: int = global_args.group_by,
-           group_join: str = global_args.group_join,
-           join: str = global_args.join,
-           unique: bool = global_args.unique,
-           sort: str = global_args.sort,
+         separators: List[str] = global_args.separators,
+         clean: bool = global_args.clean,
+         group_by: int = global_args.group_by,
+         group_join: str = global_args.group_join,
+         join: str = global_args.join,
+         unique: bool = global_args.unique,
+         sort: str = global_args.sort,
          sort_key: str = global_args.sort_key,
          keep: bool = global_args.keep,
-           where: List[str] = global_args.where,
-           indexes: str = global_args.index,
-           _not: bool = global_args._not,
-           ignore_case: bool = global_args.ignore_case
-           ):
-
+         where: List[str] = global_args.where,
+         indexes: str = global_args.index,
+         _not: bool = global_args._not,
+         ignore_case: bool = global_args.ignore_case
+         ):
 
     stdin = STDIN()
     stdin.process(lambda x: _wrap(prefix + x + suffix,
@@ -75,6 +68,7 @@ def wrap(prefix: str = typer.Argument('', help='Prefix to add'),
                                   ltgt=ltgt,
                                   tag=tag),
                   separators=separators,
+                  clean=clean,
                   group_by=group_by,
                   group_join=group_join,
                   unique=unique,

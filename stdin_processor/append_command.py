@@ -7,6 +7,7 @@ def append(suffix: str = typer.Argument(..., help='The suffix to append to every
 
            ____________________________: str = global_args.args_separator,
            separators: List[str] = global_args.separators,
+           clean: bool = global_args.clean,
            group_by: int = global_args.group_by,
            group_join: str = global_args.group_join,
            join: str = global_args.join,
@@ -24,6 +25,7 @@ def append(suffix: str = typer.Argument(..., help='The suffix to append to every
     stdin = STDIN()
     stdin.process(lambda x: x + suffix,
                   separators=separators,
+                  clean=clean,
                   group_by=group_by,
                   group_join=group_join,
                   unique=unique,

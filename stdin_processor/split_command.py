@@ -5,6 +5,7 @@ from stdin_processor import global_args
 import re
 from pathlib import Path
 
+
 def _split(string, **kwargs):
     index_pattern = kwargs.get('index_pattern', None)
     split_separators = kwargs.get('split_separators', [' '])
@@ -25,31 +26,29 @@ def _split(string, **kwargs):
         return split_joiner.join(split_string)
 
 
-
-
 def split(split_separators: List[Path] = typer.Argument(..., help='Separators to split each element of stdin with'),
-split_joiner: str = typer.Option(' ', '--split-join', '--sj', metavar='JOINER', help='Joiner to join the splitted element of stdin with'),
-position: str = typer.Option(None, '--position', '-p', help='Index patterns'),
-
-           ____________________________: str = global_args.args_separator,
-           separators: List[str] = global_args.separators,
-           group_by: int = global_args.group_by,
-           group_join: str = global_args.group_join,
-           join: str = global_args.join,
-           unique: bool = global_args.unique,
-           sort: str = global_args.sort,
-           sort_key: str = global_args.sort_key,
-           keep: bool = global_args.keep,
-           where: List[str] = global_args.where,
-           indexes: str = global_args.index,
-           _not: bool = global_args._not,
-           ignore_case: bool = global_args.ignore_case
-           ):
-
-
+          split_joiner: str = typer.Option(' ', '--split-join', '--sj', metavar='JOINER', help='Joiner to join the splitted element of stdin with'),
+          position: str = typer.Option(None, '--position', '-p', help='Index patterns'),
+          ____________________________: str = global_args.args_separator,
+          separators: List[str] = global_args.separators,
+          clean: bool = global_args.clean,
+          group_by: int = global_args.group_by,
+          group_join: str = global_args.group_join,
+          join: str = global_args.join,
+          unique: bool = global_args.unique,
+          sort: str = global_args.sort,
+          sort_key: str = global_args.sort_key,
+          keep: bool = global_args.keep,
+          where: List[str] = global_args.where,
+          indexes: str = global_args.index,
+          _not: bool = global_args._not,
+          ignore_case: bool = global_args.ignore_case
+          ):
     stdin = STDIN()
-    stdin.process(lambda x: _split(x, split_separators=[x.name for x in split_separators], split_joiner=split_joiner, index_pattern=position),
+    stdin.process(lambda x: _split(x, split_separators=[x.name for x in split_separators], split_joiner=split_joiner,
+                                   index_pattern=position),
                   separators=separators,
+                  clean=clean,
                   group_by=group_by,
                   group_join=group_join,
                   unique=unique,

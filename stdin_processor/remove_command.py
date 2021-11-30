@@ -38,9 +38,10 @@ def remove(regex: List[Path,] = typer.Option(None, '--regex', '-r', metavar='REG
            # strings: List[Path] = typer.Option(None, '--string', '-s', metavar='STRING', help='Remove string from stdin. Can be used multiple times'),
            charset: str = typer.Option(None, '--charset', '-c', metavar='STRING', help='The charset to remove from stdin'),
            remove_ignore_case: bool = typer.Option(False, '--ic', '--rI', help='Ignore case for targets to remove, do not confuse with -I that is used with global option --where'),
-           clean: bool = typer.Option(True, '--clean/--no-clean', '-c/--nc', help='Don\'t print lines that are empty after removal'),
+           remove_clean: bool = typer.Option(True, '--remove-clean/--no-remove-clean', '--rc/--nrc', help='Don\'t print lines that are empty after removal'),
            ____________________________: str = global_args.args_separator,
            separators: List[str] = global_args.separators,
+           clean: bool = global_args.clean,
            group_by: int = global_args.group_by,
            group_join: str = global_args.group_join,
            join: str = global_args.join,
@@ -61,6 +62,7 @@ def remove(regex: List[Path,] = typer.Option(None, '--regex', '-r', metavar='REG
     # strings = map(lambda posisxp: posisxp.name, strings)
     stdin.process(lambda x: _remove(x, reg_expressions=map(lambda posisxp: posisxp.name, regex), charset=charset, ignore_case=remove_ignore_case),
                   separators=separators,
+                  clean=clean,
                   group_by=group_by,
                   group_join=group_join,
                   unique=unique,
@@ -73,7 +75,7 @@ def remove(regex: List[Path,] = typer.Option(None, '--regex', '-r', metavar='REG
                   indexes=indexes,
                   joiner=join)
 
-    if clean:
+    if remove_clean:
         cleaned = join.join([x for x in stdin.value.split(join) if x != ''])
         print(cleaned)
     else:

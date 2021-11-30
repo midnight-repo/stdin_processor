@@ -37,6 +37,7 @@ def enum(start: int = typer.Option(0, metavar='START', help='Starts to enumerate
 
          ____________________________: str = global_args.args_separator,
          separators: List[str] = global_args.separators,
+         clean: bool = global_args.clean,
          group_by: int = global_args.group_by,
          group_join: str = global_args.group_join,
          join: str = global_args.join,
@@ -55,6 +56,7 @@ def enum(start: int = typer.Option(0, metavar='START', help='Starts to enumerate
     stdin = STDIN()
     stdin.process(lambda x: _enum(x, start, bound, beginning=beginning, ending=ending, num_format=format),
                   separators=separators,
+                  clean=clean,
                   group_by=group_by,
                   group_join=group_join,
                   unique=unique,
