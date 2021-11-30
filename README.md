@@ -119,7 +119,7 @@ This is technically done by converting an element, which at this point is a stri
 
 For extra specificity, you can also only target individual or ranges of elements in the ones that matched.
 
-Say you want to only process the three last elements that matched, you can use the --index global option, that reads python slicing patterns (without the brackets), comma separated.
+Say you want to only process the three last elements that matched, you can use the --index global option, that reads [python slicing patterns](https://stackoverflow.com/questions/509211/understanding-slice-notation) (without the brackets), comma separated.
 
     cat file.txt | sp <command> -i -3:
 
