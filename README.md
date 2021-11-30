@@ -129,7 +129,7 @@ a[:]           # a copy of the whole array
 
 If for exemple you want to process only the first (0), and the two last elements(-2:) that matched :
 
-    cat file.txt | sp <command> -i 0,-2:
+    cat file.txt | sp <command> --where <regex> -i 0,-2:
 
   - Step 4 : MAPPING
 
