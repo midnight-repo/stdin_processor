@@ -83,7 +83,7 @@ At this point, the standard input has been split into distinct elements.
 The process of mapping is simply to process every element with the subcommand. This is where subcommand specific options take place.
 
 ### Detailed steps
-The whole process actually takes 8 steps.
+The whole process actually takes 7 steps.
 
 Let's say you pipe the content of file.txt to the stdin_processor.
 
@@ -107,23 +107,23 @@ The STDIN in now split into a list of elements, each one represented by two line
 
 If needed, you can also specify how thoses two lines should be joined together with the --group-join option (the default being a simple space character).
 
-  - Step 3 : FLAG THE ELEMENTS
+  - Step 3 : FLAG MATCHING ELEMENTS
 
 Sometimes you might not want to process all the elements, but just those that match a certain condition (regular expression). If that is needed, you can also specify if you want to keep or not the elements that did not match with the --keep global option (default is to keep).
+    
+    cat file.txt | sp <command> --where <regex>
 
 The third step adds to each element with a "match" and "keep" flag, so the mapping step knows what to to with it.
 
 This is technically done by converting an element, which at this point is a string, to a dictionnary with keys "match":bool, "keep":bool, "value":string value of the element
 
-  - Step 4 : TARGET INDEXES
+For extra specificity, you can also only target individual or ranges of elements in the ones that matched.
 
-For extra specificity, you can also only target a range of elements, defined by their index in the list.
+Say you want to only process the three last elements that matched, you can use the --index global option, that reads python slicing patterns (without the brackets), comma separated.
 
-Say you want to only process the three last elements, you can use the --index global option.
+    cat file.txt | sp <command> -i -3:
 
-    sp <command> -i -3:
-
-  - Step 5 : MAPPING
+  - Step 4 : MAPPING
 
 **The mapping step is where the subcommand and its specific options takes place.**
 
@@ -133,13 +133,13 @@ For each element of STDIN, **if** the **MATCH** flag is **False**, **if** the **
 
 **else** the element is **not kept**
 
-  - Step 6: REMOVING DUPLICATES
+  - Step 5: REMOVING DUPLICATES
 
 The purpose of this step is simply to remove duplicate values from the element list. This is specified with the --unique global option, default being to not remove duplicates.
 
     cat file.txt | sp <command> -u
 
-  - Step 7: SORT
+  - Step 6: SORT
 
 In case the output needs to be sorted, it is done in the step 7.
 
@@ -149,7 +149,7 @@ If a more specific sorting is needed, you can use the --sort-key <regex> global 
   
     cat file.txt | sp <command> --sort 'Aa0!' --sort-key <regex>
   
-  - Step 8 : JOIN
+  - Step 7 : JOIN
 
 The last and final step is to join the list of elements.
  
