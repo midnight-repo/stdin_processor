@@ -5,7 +5,8 @@ from stdin_processor import global_args
 
 
 def _wrap(string, **kwargs):
-
+    prefix = kwargs.get('prefix')
+    suffix = kwargs.get('suffix')
     s = string
 
     wrapper = {
@@ -28,7 +29,7 @@ def _wrap(string, **kwargs):
                 for tag_name in kwargs[element]:
                     s = wrapper[element](s, tag_name)
 
-    return s
+    return prefix + s + suffix
 
 
 def wrap(prefix: str = typer.Argument('', help='Prefix to add'),
@@ -59,7 +60,9 @@ def wrap(prefix: str = typer.Argument('', help='Prefix to add'),
          ):
 
     stdin = STDIN()
-    stdin.process(lambda x: _wrap(prefix + x + suffix,
+    stdin.process(lambda x: _wrap(x,
+                                  prefix=prefix,
+                                  suffix=suffix,
                                   quote=quote,
                                   double_quote=double_quote,
                                   back_quote=back_quote,
