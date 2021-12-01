@@ -171,3 +171,28 @@ The joinder can be provided with the --join global option, the default being a l
 We will first learn how to use the show and hide commands since they are a bit particular.
 
 In fact, they do not have any command specific option, and this is for a good reason : they do not perform any action on elements of stdin. Instead, they simply chose to keep them or not.
+
+Let's take a csv file for example.
+
+Here are some ways of printing the content of the file, without the first row :
+
+![show and hide](./usage_examples/show_hide.png)
+  
+*Notice that 'hide --where' is equivalent of 'show --not --where' and 'hide --not --where' is equivalent to 'show --where'*
+
+They can also be used when you need to reshape the stdin without performing any actions on the elements of STDIN.
+
+Let's say that you now want to skip the first line, and change the separator which is a currently a comma ",":
+
+![change csv delimiter](./usage_examples/csv_change_delimiter.png)
+ 
+Example 1 :
+*--nc ; --no-clean : When this option is passed, sp will not remove empty lines when processing. This is important in our case since CSV files can contain empty values and we want to keep them* (Example 2 shows you why --nc is important in this particular case.)
+*--sep l ; --separator: here we have two separators : line feed (\n) representing rows and comma, reresenting colums*
+*-g ; --group-by : each row contains 7 colums, so we want to group elements of STDIN 7 by 7*
+*--gj ; --group-join* : this options tells sp how to join the elements in the same group, here '; '
+*-i : --index* : this tells sp to target only show the indexed elments, here '1:' means all elements from element 1 (the frist one being element 0)
+
+Example 3 :
+*The first option does the job ine one pipe, and is the "proper" way to go if you want to perform action on every element of the csv.*
+*For our concern here which is to simply output the csv with another separator, the example 3 shows a more simple approach in two pipes.*
