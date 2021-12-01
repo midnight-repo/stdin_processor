@@ -23,7 +23,8 @@ def _wrap(string, **kwargs):
         if kwargs[element] != False:
             if type(kwargs[element]) == bool:
                 s = wrapper[element](s)
-            elif element == 'tag' and kwargs[element] != ['']:
+            elif element == 'tag' and kwargs[element] != ('',):
+                print(element, kwargs[element])
                 for tag_name in kwargs[element]:
                     s = wrapper[element](s, tag_name)
 
