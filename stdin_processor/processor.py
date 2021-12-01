@@ -249,8 +249,6 @@ class STDIN():
             flagged[i]['keep'] = True if flagged[i]['match_index'] in indexed else keep
 
         self.value = flagged
-        for f in flagged:
-            print(f)
         return self.value
 
 
