@@ -243,17 +243,14 @@ class STDIN():
 
         # INDEX
         indexed = parse_index_pattern([x for x in flagged if x['match'] == True], index_pattern)
-        for element in flagged:
-            matched = True if element['match_index'] in indexed else False
-            if matched:
-                element['match'] = True
-            else:
-                element['match'] = False
 
         for i in range(len(flagged)):
             flagged[i]['match'] = True if flagged[i]['match_index'] in indexed else False
+            flagged[i]['keep'] = True if flagged[i]['match_index'] in indexed else keep
 
         self.value = flagged
+        for f in flagged:
+            print(f)
         return self.value
 
 
