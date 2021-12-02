@@ -187,11 +187,12 @@ Let's say that you now want to skip the first line, and change the separator whi
 ![change csv delimiter](./usage_examples/csv_change_delimiter.png)
  
 Example 1 :
-*--nc ; --no-clean : When this option is passed, sp will not remove empty lines when processing. This is important in our case since CSV files can contain empty values and we want to keep them* (Example 2 shows you why --nc is important in this particular case.)
+
+  *--nc ; --no-clean* : When this option is passed, sp will not remove empty lines when processing. This is important in our case since CSV files can contain empty values and we want to keep them* (Example 2 shows you why --nc is important in this particular case.)
   
-*--sep l ; --separator: here we have two separators : line feed (\n) representing rows and comma, reresenting colums*
+*--sep l ; --separator*: here we have two separators : line feed (\n) representing rows and comma, reresenting colums
   
-*-g ; --group-by : each row contains 7 colums, so we want to group elements of STDIN 7 by 7*
+*-g ; --group-by* : each row contains 7 colums, so each row contains 7 elements, so we want to group elements of STDIN 7 by 7 to process it row per row.
   
 *--gj ; --group-join* : this options tells sp how to join the elements in the same group, here '; '
   
