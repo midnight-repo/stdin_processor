@@ -43,7 +43,7 @@ Since the tool reads stadard input, the basic usage would imply piping the stand
 
 For complex operations, you can use pipe chains :
 
-    echo hello, world ! | sp replace hello goodbye | sp encode b64
+    echo hello, world ! | sp replace hello goodbye | sp encode b64 | sp wrap console.log -qp --tag script
 
 The tool possesses two types of options, global and subcommand specific:
 

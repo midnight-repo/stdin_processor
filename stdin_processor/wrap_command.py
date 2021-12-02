@@ -24,12 +24,15 @@ def _wrap(string, **kwargs):
         if kwargs[element] != False:
             if type(kwargs[element]) == bool:
                 s = wrapper[element](s)
-            elif element == 'tag' and kwargs[element] != ('',):
-                print(element, kwargs[element])
-                for tag_name in kwargs[element]:
-                    s = wrapper[element](s, tag_name)
 
-    return prefix + s + suffix
+    s = prefix + s + suffix
+
+    for element in kwargs:
+        if element == 'tag' and kwargs[element] != ('',):
+            for tag_name in kwargs[element]:
+                s = wrapper[element](s, tag_name)
+
+    return s
 
 
 def wrap(prefix: str = typer.Argument('', help='Prefix to add'),
