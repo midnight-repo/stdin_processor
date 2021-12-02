@@ -1,6 +1,6 @@
 # stdin_processor (sp)
 ## Introduction
-Advanced stdin/stdout and string manipulation in BASH often requires knowledge of a certain set of tools ("sed", "head", "tail", "grep", "sort", "xargs", "expr","cut", "awk" ...) and going through a couple of help manuals or stackoverflow questions. As it is substancially achievable, it does nevertheless feel less intuitive than OOP which provides string and list methods for complex operations.
+Advanced stdin/stdout and string manipulation in BASH often requires knowledge of a certain set of tools ("sed", "head", "tail", "sort", "expr","cut", "awk" ...) and going through a couple of help manuals or stackoverflow questions. As it is substancially achievable, it does nevertheless feel less intuitive than OOP which provides string and list methods for complex operations.
 This tool aims to improve productivity by providing a simple yet complete toolbox with flexible and intuitive options completed with a wide variety of commands, making any avanced operation as **quick** as thinking about it, as **simple** as a few pipes and **easy to read**.
 
 It is fully written in python3, making it availiable on Linux, Windows, MacOS, and it's is based on typer, which is based on click, a famous library for creating command line tools.
