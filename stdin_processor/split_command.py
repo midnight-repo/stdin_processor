@@ -16,7 +16,6 @@ def _split(string, **kwargs):
     backslashed_separators = map(backslashed, split_separators)
     regex_pattern = '|'.join(backslashed_separators)
     split_string = re.split(regex_pattern, s)
-    print(split_string)
     if not split_keep:
         while '' in split_string: split_string.remove('')
 
