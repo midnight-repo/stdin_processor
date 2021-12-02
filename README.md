@@ -198,6 +198,8 @@ Example 1 :
   
 *-i : --index* : this tells sp to target only show the indexed elments, here '1:' means all elements from element 1 (the frist one being element 0)
 
+<br>  
 Example 3 :
+  
 *The first option does the job ine one pipe, and is the "proper" way to go if you want to perform action on every element of the csv.*
 *For our concern here which is to simply output the csv with another separator, the example 3 shows a more simple approach in two pipes.*
