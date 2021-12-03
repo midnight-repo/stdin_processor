@@ -129,7 +129,7 @@ If needed, you can also specify how thoses two lines should be joined together w
 
   - Step 3 : FLAG MATCHING ELEMENTS
 
-Sometimes you might not want to process all the elements, but just those that match a certain condition (regular expression). If that is needed, you can also specify if you want to keep or not the elements that did not match with the --keep global option (default is to keep).
+Sometimes you might not want to process all the elements, but just those that match a certain condition (regular expression). If that is needed, you can also specify if you want to keep or not the elements that did not match with the --keep global option (default is to keep except for show command).
     
     cat file.txt | sp <command> --where <regex>
 
