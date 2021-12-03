@@ -123,6 +123,8 @@ The second step is to group elements if needed. Let's say you wanted the tool to
 
     cat file.txt | sp <command> --group-by 2
 
+![--group-by example](/usage_examples/credentials.png)
+
 The STDIN in now split into a list of elements, each one represented by two lines of the file.
 
 If needed, you can also specify how thoses two lines should be joined together with the --group-join option (the default being a simple space character).
@@ -150,6 +152,8 @@ a[:]           # a copy of the whole array
 If for exemple you want to process only the first (0), and the two last elements(-2:) that matched :
 
     cat file.txt | sp <command> --where <regex> -i 0,-2:
+
+![--where <regex> --index <slincing_pattern>](/usage_examples/__where__index.png)
 
   - Step 4 : MAPPING
 
