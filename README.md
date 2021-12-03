@@ -67,6 +67,26 @@ To view help for any command :
 
     sp <command> --help
 
+Currently availiable subcommands :
+
+-  append
+-  decode
+-  encode
+-  enum
+-  hash
+-  hide
+-  lower
+-  prepend
+-  remove
+-  replace
+-  reverse
+-  show
+-  split
+-  strip
+-  upper
+-  wrap
+
+
 ## How it works
 The way this tool works can be split in two distinct operations: 
   - STDIN shaping (represented by the global options)
