@@ -93,7 +93,7 @@ The way this tool works can be split in two distinct operations:
   - Mapping (represented by the command specific options)
 
 ### STDIN shaping
-The purpose of this step is mainly, to determine how the STDIN should be split.
+The purpose of this step is mainly, to determine how the STDIN should be split and reassambled.
 
 The STDIN is read by the tool as one whole string block. It is then split into a list of elements. The default separator is the line feed "\n" to read the standard input line by line, but you can use custom separators with the --sep global option (usable multiple times if more than one separator is needed).
 
