@@ -19,6 +19,11 @@ def _enum(line: str, start: int, bound: int, **kwargs):
     if enum_initialized == False:
         i = start
         enum_initialized = True
+
+        if beginning: l = str(i) + num_format + l
+        if ending: l = l + num_format + str(i)
+        i += bound
+        
     else:
         if beginning: l = str(i) + num_format + l
         if ending: l = l + num_format + str(i)
@@ -44,6 +49,7 @@ def enum(start: int = typer.Option(0, metavar='START', help='Starts to enumerate
          unique: bool = global_args.unique,
          sort: str = global_args.sort,
          sort_key: str = global_args.sort_key,
+         shuffle: bool = global_args.shuffle,
          keep: bool = global_args.keep,
          where: List[str] = global_args.where,
          indexes: str = global_args.index,
@@ -62,6 +68,7 @@ def enum(start: int = typer.Option(0, metavar='START', help='Starts to enumerate
                   unique=unique,
                   sort=sort,
                   sort_key=sort_key,
+                  shuffle=shuffle,
                   keep=keep,
                   where=where,
                   _not=_not,

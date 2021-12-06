@@ -2,7 +2,7 @@ import re
 import sys
 import string as chars
 import typer
-
+import random
 
 
 # WHAT IS DOES : this is used to read line feed, carriage return and tab characters as arguments or options from the command line
@@ -276,6 +276,7 @@ class STDIN():
         group_by = kwargs.get('group_by', 1)
         group_join = kwargs.get('group_join')
         unique = kwargs.get('unique', False)
+        shuffle = kwargs.get('shuffle')
         sort = kwargs.get('sort', False)
         sort_key = kwargs.get('sort_key', None)
         keep = kwargs.get('keep', '')
@@ -292,6 +293,10 @@ class STDIN():
         if group_by > 1:
             self.group_by(group_by, group_join)
 
+        # needs to be there for enum
+        if shuffle:
+            random.shuffle(self.value)
+
 
         self.match(*where, ignore_case=ignore_case, index_pattern=indexes, keep=keep, _not=_not)
 
@@ -299,6 +304,7 @@ class STDIN():
 
         if unique:
             self.remove_duplicates()
+
 
         # before or after processing ? if prepend --where for exemple
         if sort != 'False':

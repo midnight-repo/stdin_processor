@@ -15,6 +15,7 @@ def hide(
         unique: bool = global_args.unique,
         sort: str = global_args.sort,
         sort_key: str = global_args.sort_key,
+        shuffle: bool = global_args.shuffle,
         keep: bool = global_args.keep,
         where: List[str] = global_args.where,
         indexes: str = global_args.index,
@@ -47,6 +48,10 @@ def hide(
     stdin.split(*separators, clean=clean)
     if group_by > 1:
         stdin.group_by(group_by, group_join)
+
+    if shuffle:
+        random.shuffle(stdin.value)
+
     stdin.match(*where, ignore_case=ignore_case, index_pattern=indexes, keep=keep, _not=_not)
     stdin.map(lambda x: random_val)
     while random_val in stdin.value:

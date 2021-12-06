@@ -73,13 +73,15 @@ sort_key = typer.Option('',
                    help='Key to use when sorting. If used, the output will be sort depending on what the regex match on each element')
 
 
+shuffle = typer.Option(False, help='Change the order of stdin elements to a random one')
+
+
 index = typer.Option('0:',
                      '--index',
                      '-i',
                      help='Comma separated list of indexes or ranges to show [ex: 0,:4,6:10,:-1] [default: 0: (ALL)]',
                      show_default=False,
                      metavar='INDEXES')
-
 
 
 args_separator = typer.Option('',
