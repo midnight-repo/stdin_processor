@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 
 
 setup(name='stdin_processor',
-      version='0.0.61',
+      version='0.0.62',
       description='String and Standard input manipulation CLI',
       author='midnight_repo',
       author_email='midnight_repo@protonmail.com',
