@@ -23,7 +23,7 @@ def _enum(line: str, start: int, bound: int, **kwargs):
         if beginning: l = str(i) + num_format + l
         if ending: l = l + num_format + str(i)
         i += bound
-        
+
     else:
         if beginning: l = str(i) + num_format + l
         if ending: l = l + num_format + str(i)
