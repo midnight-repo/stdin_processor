@@ -37,7 +37,8 @@ def _replace(*old, new, string, **kwargs):
     return s
 
 
-def replace(targets: List[Path] = typer.Argument(..., help='Regular expressions to replace followed by the replacement [ex:  \'1 2 3 0\'  to replace 1, 2 and 3 by 0]'),
+def replace(replacement: str = typer.Argument(''),
+            targets: List[str] = typer.Option(None, '--regex', '-r', help='Regular expressions to replace followed by the replacement [ex:  \'1 2 3 0\'  to replace 1, 2 and 3 by 0]'),
             position: str = typer.Option(None, '--position', '-p', help='Comma separated list of positions corresponding to the list of matches [ex: :2,4,6:]'),
             replace_ignore_case: bool = typer.Option(False, '--ic', '--rI', help='Ignore case for strings to replace, do not confuse with -I which is used with --where'),
             ____________________________: str = global_args.args_separator,
@@ -56,8 +57,11 @@ def replace(targets: List[Path] = typer.Argument(..., help='Regular expressions 
             ):
 
     stdin = STDIN()
-    stdin.process(lambda x: _replace(*map(lambda x: x.name, targets[:-1]), new=targets[-1].name, string=x,
-                                     position_pattern=position, ignore_case=replace_ignore_case),
+    stdin.process(lambda x: _replace(*targets,
+                                     new=replacement,
+                                     string=x,
+                                     position_pattern=position,
+                                     ignore_case=replace_ignore_case),
                   separators=separators,
                   group_by=group_by,
                   unique=unique,
