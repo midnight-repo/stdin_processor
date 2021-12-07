@@ -121,9 +121,6 @@ Multiple separators can be used.
 
 The second step is to group elements if needed. Let's say you wanted the tool to read the file two lines by two lines, you can use the --group-by global option for that :
 
-    cat file.txt | sp <command> --group-by 2
-
-
 The STDIN in now split into a list of elements, each one represented by two lines of the file.
 
 If needed, you can also specify how thoses two lines should be joined together with the --group-join option (the default being a simple space character).
