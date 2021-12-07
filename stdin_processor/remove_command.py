@@ -52,6 +52,7 @@ def remove(regex: List[str] = typer.Option(None, '--regex', '-e', metavar='REGEX
            where: List[str] = global_args.where,
            indexes: str = global_args.index,
            _not: bool = global_args._not,
+           rotation: int = global_args.rotation,
            ignore_case: bool = global_args.ignore_case
            ):
 
@@ -74,6 +75,7 @@ def remove(regex: List[str] = typer.Option(None, '--regex', '-e', metavar='REGEX
                   _not=_not,
                   ignore_case=ignore_case,
                   indexes=indexes,
+                  rotation=rotation,
                   joiner=join)
 
     if remove_clean:

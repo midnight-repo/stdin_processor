@@ -83,6 +83,8 @@ index = typer.Option('0:',
                      show_default=False,
                      metavar='INDEXES')
 
+rotation = typer.Option(0, '--rotation', '--rot', metavar='INT', help='Rotate stdin up (-) or down (+)'),
+
 
 args_separator = typer.Option('',
                               typer.style('=========  The options listed below are common to all commands  =========', fg=typer.colors.BRIGHT_WHITE),

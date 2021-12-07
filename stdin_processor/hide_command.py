@@ -4,6 +4,8 @@ from stdin_processor import global_args
 import random
 import string as chars
 import sys
+from collections import deque
+
 
 def hide(
         ______________: str = global_args.args_separator,
@@ -19,6 +21,7 @@ def hide(
         keep: bool = global_args.keep,
         where: List[str] = global_args.where,
         indexes: str = global_args.index,
+        rotation: int = global_args.rotation,
         _not: bool = global_args._not,
         ignore_case: bool = global_args.ignore_case
 ):
@@ -48,7 +51,10 @@ def hide(
     stdin.split(*separators, clean=clean)
     if group_by > 1:
         stdin.group_by(group_by, group_join)
-
+    if rotation != 0:
+        val = deque(stdin.value)
+        val.rotate(rotation)
+        stdin.value = val
     if shuffle:
         random.shuffle(stdin.value)
 

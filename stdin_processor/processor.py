@@ -1,6 +1,6 @@
 import re
-import sys
 import string as chars
+from collections import deque
 import typer
 import random
 
@@ -284,6 +284,7 @@ class STDIN():
         indexes = kwargs.get('indexes', '0:')
         _not = kwargs.get('_not', False)
         ignore_case = kwargs.get('ignore_case', False)
+        rotation = kwargs.get('rotation', 0)
         joiner = kwargs.get('joiner', '\n')
 
 
@@ -292,6 +293,11 @@ class STDIN():
 
         if group_by > 1:
             self.group_by(group_by, group_join)
+
+        if rotation != 0:
+            val = deque(self.value)
+            val.rotate(rotation)
+            self.value = val
 
         # needs to be there for enum
         if shuffle:
@@ -309,6 +315,7 @@ class STDIN():
         # before or after processing ? if prepend --where for exemple
         if sort != 'False':
             self.sort(sort, sort_key=sort_key)
+
 
         self.join(joiner)
 

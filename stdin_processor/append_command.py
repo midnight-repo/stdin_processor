@@ -20,6 +20,7 @@ def append(suffix: str = typer.Argument(..., help='The suffix to append to every
            where: List[str] = global_args.where,
            indexes: str = global_args.index,
            _not: bool = global_args._not,
+           rotation: int = global_args.rotation,
            ignore_case: bool = global_args.ignore_case
            ):
 
@@ -39,6 +40,7 @@ def append(suffix: str = typer.Argument(..., help='The suffix to append to every
                   _not=_not,
                   ignore_case=ignore_case,
                   indexes=indexes,
+                  rotation=rotation,
                   joiner=join)
 
     print(stdin.value, end='' if stdin.value.endswith('\n') else '\n')

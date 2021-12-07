@@ -19,7 +19,9 @@ def reverse(
         where: List[str] = global_args.where,
         indexes: str = global_args.index,
         _not: bool = global_args._not,
+        rotation: int = global_args.rotation,
         ignore_case: bool = global_args.ignore_case
+
 ):
     stdin = STDIN(sys.stdin.read())
     stdin.process(lambda x: ''.join(list(reversed(x))),
@@ -36,6 +38,7 @@ def reverse(
                   _not=_not,
                   ignore_case=ignore_case,
                   indexes=indexes,
+                  rotation=rotation,
                   joiner=join)
 
     print(stdin.value, end='' if stdin.value.endswith('\n') else '\n')

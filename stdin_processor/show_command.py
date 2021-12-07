@@ -18,6 +18,7 @@ def show(
         keep: bool = typer.Option(False, '--keep/--no-keep', '-k/--nk', help='Keep the elements that that did not match --where or --index'),
         where: List[str] = global_args.where,
         indexes: str = global_args.index,
+        rotation: int = global_args.rotation,
         _not: bool = global_args._not,
         ignore_case: bool = global_args.ignore_case
 ):
@@ -38,6 +39,7 @@ def show(
                   _not=_not,
                   ignore_case=ignore_case,
                   indexes=indexes,
+                  rotation=rotation,
                   joiner=join)
 
     print(stdin.value, end='' if stdin.value.endswith('\n') else '\n')
