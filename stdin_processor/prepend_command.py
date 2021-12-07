@@ -2,7 +2,7 @@ import typer
 from typing import List
 from stdin_processor.processor import STDIN
 from stdin_processor import global_args
-
+import sys
 
 def prepend(prefix: str = typer.Argument(..., help='The prefix to prepend to every element of stdin'),
             ____________________________: str = global_args.args_separator,
@@ -21,7 +21,7 @@ def prepend(prefix: str = typer.Argument(..., help='The prefix to prepend to eve
             _not: bool = global_args._not,
             ignore_case: bool = global_args.ignore_case
             ):
-    stdin = STDIN()
+    stdin = STDIN(sys.stdin.read())
     stdin.process(lambda x: prefix + x,
                   separators=separators,
                   clean=clean,

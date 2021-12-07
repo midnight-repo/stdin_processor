@@ -3,7 +3,7 @@ from typing import List
 from stdin_processor.processor import STDIN, backslashed, parse_index_pattern
 from stdin_processor import global_args
 import re
-
+import sys
 
 def _replace(*old, new, string, **kwargs):
     position_pattern = kwargs.get('position_pattern', None)
@@ -55,7 +55,7 @@ def replace(replacement: str = typer.Argument(''),
             ignore_case: bool = global_args.ignore_case
             ):
 
-    stdin = STDIN()
+    stdin = STDIN(sys.stdin.read())
     stdin.process(lambda x: _replace(*targets,
                                      new=replacement,
                                      string=x,

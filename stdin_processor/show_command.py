@@ -2,7 +2,7 @@ import typer
 from typing import List
 from stdin_processor.processor import STDIN
 from stdin_processor import global_args
-
+import sys
 
 def show(
         ______________: str = global_args.args_separator,
@@ -23,7 +23,7 @@ def show(
 ):
 
 
-    stdin = STDIN()
+    stdin = STDIN(sys.stdin.read())
     stdin.process(lambda x: x,
                   separators=separators,
                   clean=clean,

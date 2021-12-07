@@ -3,7 +3,7 @@ from typing import List
 from stdin_processor.processor import STDIN
 from stdin_processor import global_args
 import hashlib
-
+import sys
 
 def _hash(string, **kwargs):
     alg = kwargs.get('alg')
@@ -45,7 +45,7 @@ def hash(alg: str = typer.Argument(..., help='Encoding to use'),
          ignore_case: bool = global_args.ignore_case
          ):
 
-    stdin = STDIN()
+    stdin = STDIN(sys.stdin.read())
     stdin.process(lambda x: _hash(x, alg=alg, list=list),
                   separators=separators,
                   clean=clean,

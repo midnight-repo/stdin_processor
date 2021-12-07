@@ -1,4 +1,4 @@
-import typer
+import sys
 from typing import List
 from stdin_processor.processor import STDIN
 from stdin_processor import global_args
@@ -21,7 +21,7 @@ def reverse(
         _not: bool = global_args._not,
         ignore_case: bool = global_args.ignore_case
 ):
-    stdin = STDIN()
+    stdin = STDIN(sys.stdin.read())
     stdin.process(lambda x: ''.join(list(reversed(x))),
                   separators=separators,
                   clean=clean,

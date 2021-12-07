@@ -1,9 +1,9 @@
-import typer
 from typing import List
 from stdin_processor.processor import STDIN
 from stdin_processor import global_args
 import random
 import string as chars
+import sys
 
 def hide(
         ______________: str = global_args.args_separator,
@@ -24,7 +24,7 @@ def hide(
 ):
 
 
-    stdin = STDIN()
+    stdin = STDIN(sys.stdin.read())
     # stdin.process(lambda x: x,
     #               separators=separators,
     #               clean=clean,

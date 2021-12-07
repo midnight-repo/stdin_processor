@@ -1,8 +1,7 @@
-import typer
 from typing import List
 from stdin_processor.processor import STDIN
 from stdin_processor import global_args
-
+import sys
 
 def lower(
         ____________________________: str = global_args.args_separator,
@@ -21,7 +20,7 @@ def lower(
         _not: bool = global_args._not,
         ignore_case: bool = global_args.ignore_case
 ):
-    stdin = STDIN()
+    stdin = STDIN(sys.stdin.read())
     stdin.process(lambda x: x.lower(),
                   separators=separators,
                   clean=clean,

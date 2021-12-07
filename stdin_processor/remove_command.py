@@ -1,7 +1,7 @@
 import re
-
+import sys
 import typer
-from typing import List, Tuple
+from typing import List
 from stdin_processor.processor import STDIN
 from stdin_processor import global_args
 from stdin_processor.processor import backslashed
@@ -57,7 +57,7 @@ def remove(regex: List[str] = typer.Option(None, '--regex', '-e', metavar='REGEX
 
 
 
-    stdin = STDIN()
+    stdin = STDIN(sys.stdin.read())
     # add this and uncomment in _remove() function to add support for strings
     # strings = map(lambda posisxp: posisxp.name, strings)
     stdin.process(lambda x: _remove(x, reg_expressions=regex, charset=charset, ignore_case=remove_ignore_case),

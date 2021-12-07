@@ -5,7 +5,7 @@ from stdin_processor import global_args
 from urllib.parse import unquote, unquote_plus
 import base64
 import binascii
-
+import sys
 
 
 def _decode(string, **kwargs):
@@ -55,7 +55,7 @@ def decode(encoding: str = typer.Argument(..., help='Encoding to use'),
            ):
 
 
-    stdin = STDIN()
+    stdin = STDIN(sys.stdin.read())
     stdin.process(lambda x: _decode(x, encoding=encoding, list=list),
                   separators=separators,
                   clean=clean,

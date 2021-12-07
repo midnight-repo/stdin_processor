@@ -4,7 +4,7 @@ from stdin_processor.processor import STDIN
 from stdin_processor import global_args
 from urllib.parse import quote, quote_plus
 import base64
-
+import sys
 
 def _encode(string, **kwargs):
     encoding = kwargs.get('encoding')
@@ -53,7 +53,7 @@ def encode(encoding: str = typer.Argument(..., help='Encoding to use'),
            ):
 
 
-    stdin = STDIN()
+    stdin = STDIN(sys.stdin.read())
     stdin.process(lambda x: _encode(x, encoding=encoding, list=list),
                   separators=separators,
                   clean=clean,

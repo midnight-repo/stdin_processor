@@ -2,6 +2,7 @@ import typer
 from typing import List
 from stdin_processor.processor import STDIN
 from stdin_processor import global_args
+import sys
 
 def append(suffix: str = typer.Argument(..., help='The suffix to append to every element of stdin'),
 
@@ -23,7 +24,7 @@ def append(suffix: str = typer.Argument(..., help='The suffix to append to every
            ):
 
 
-    stdin = STDIN()
+    stdin = STDIN(sys.stdin.read())
     stdin.process(lambda x: x + suffix,
                   separators=separators,
                   clean=clean,

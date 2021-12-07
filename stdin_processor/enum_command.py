@@ -2,7 +2,7 @@ import typer
 from typing import List
 from stdin_processor.processor import STDIN
 from stdin_processor import global_args
-
+import sys
 
 i = 0
 enum_initialized = False
@@ -59,7 +59,7 @@ def enum(start: int = typer.Option(0, metavar='START', help='Starts to enumerate
 
 
 
-    stdin = STDIN()
+    stdin = STDIN(sys.stdin.read())
     stdin.process(lambda x: _enum(x, start, bound, beginning=beginning, ending=ending, num_format=format),
                   separators=separators,
                   clean=clean,

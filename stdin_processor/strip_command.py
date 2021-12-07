@@ -2,7 +2,7 @@ import typer
 from typing import List
 from stdin_processor.processor import STDIN
 from stdin_processor import global_args
-
+import sys
 
 def _strip(line, **kwargs):
     left = kwargs.get('left', True)
@@ -34,7 +34,7 @@ def strip(left: bool = typer.Option(True, '--left/--no-left', '-l/--nl', help='S
           _not: bool = global_args._not,
           ignore_case: bool = global_args.ignore_case
           ):
-    stdin = STDIN()
+    stdin = STDIN(sys.stdin.read())
     stdin.process(lambda x: _strip(x, left=left, right=right),
                   separators=separators,
                   clean=clean,

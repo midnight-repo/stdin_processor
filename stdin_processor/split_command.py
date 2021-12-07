@@ -3,8 +3,7 @@ from typing import List
 from stdin_processor.processor import STDIN, backslashed, parse_index_pattern
 from stdin_processor import global_args
 import re
-from pathlib import Path
-
+import sys
 
 def _split(string, **kwargs):
     index_pattern = kwargs.get('index_pattern', None)
@@ -27,7 +26,7 @@ def _split(string, **kwargs):
         return split_joiner.join(split_string)
 
 
-def split(split_separators: List[Path] = typer.Argument(..., help='Separators to split each element of stdin with'),
+def split(split_separators: List[str] = typer.Argument(..., help='Separators to split each element of stdin with'),
           split_joiner: str = typer.Option(' ', '--split-join', '--sj', metavar='JOINER', help='Joiner to join the splitted element of stdin with'),
           position: str = typer.Option(None, '--position', '-p', help='Index patterns'),
           split_keep: bool = typer.Option(True, '--split-keep/--no-split-keep', '--sk/--nsk', show_default=False, help='Keep empty values when splitting each element [default: keep]'),
@@ -47,8 +46,8 @@ def split(split_separators: List[Path] = typer.Argument(..., help='Separators to
           _not: bool = global_args._not,
           ignore_case: bool = global_args.ignore_case
           ):
-    stdin = STDIN()
-    stdin.process(lambda x: _split(x, split_separators=[x.name for x in split_separators], split_joiner=split_joiner,
+    stdin = STDIN(sys.stdin.read())
+    stdin.process(lambda x: _split(x, split_separators=split_separators, split_joiner=split_joiner,
                                    index_pattern=position, split_keep=split_keep),
                   separators=separators,
                   clean=clean,

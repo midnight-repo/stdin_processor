@@ -89,8 +89,8 @@ def parse_index_pattern(target_list, index_pattern):
 
 # This class represents standard input and contains methods to manipulate it
 class STDIN():
-    def __init__(self):
-        self.value = sys.stdin.read()
+    def __init__(self, string_value):
+        self.value = string_value
 
 
     # WHAT IT DOES : splits self.value by one or more separators

@@ -2,6 +2,7 @@ import typer
 from typing import List
 from stdin_processor.processor import STDIN
 from stdin_processor import global_args
+import sys
 
 
 def _wrap(string, **kwargs):
@@ -63,7 +64,7 @@ def wrap(prefix: str = typer.Argument('', help='Prefix to add'),
          ignore_case: bool = global_args.ignore_case
          ):
 
-    stdin = STDIN()
+    stdin = STDIN(sys.stdin.read())
     stdin.process(lambda x: _wrap(x,
                                   prefix=prefix,
                                   suffix=suffix,
