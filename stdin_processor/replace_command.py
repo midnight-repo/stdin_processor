@@ -2,7 +2,6 @@ import typer
 from typing import List
 from stdin_processor.processor import STDIN, backslashed, parse_index_pattern
 from stdin_processor import global_args
-from pathlib import Path
 import re
 
 
@@ -38,7 +37,7 @@ def _replace(*old, new, string, **kwargs):
 
 
 def replace(replacement: str = typer.Argument(''),
-            targets: List[str] = typer.Option(None, '--regex', '-r', help='Regular expressions to replace followed by the replacement [ex:  \'1 2 3 0\'  to replace 1, 2 and 3 by 0]'),
+            targets: List[str] = typer.Option(None, '--regex', '-e', help='Regular expressions to replace followed by the replacement [ex:  \'1 2 3 0\'  to replace 1, 2 and 3 by 0]'),
             position: str = typer.Option(None, '--position', '-p', help='Comma separated list of positions corresponding to the list of matches [ex: :2,4,6:]'),
             replace_ignore_case: bool = typer.Option(False, '--ic', '--rI', help='Ignore case for strings to replace, do not confuse with -I which is used with --where'),
             ____________________________: str = global_args.args_separator,
