@@ -187,15 +187,5 @@ The joinder can be provided with the --join global option, the default being a l
 
     cat file.txt | sp <command> -j '; '
 
-## Usage examples
-### show and hide commands
-
-We will first learn how to use the show and hide commands since they are a bit particular.
-
-In fact, they do not have any command specific option, and this is for a good reason : they do not perform any action on elements of stdin. Instead, they simply chose to keep them or not.
-
-They can be used to filter or reformat standard input without modifying its elements.
-  
-Let's take a csv file for example.
 
 
