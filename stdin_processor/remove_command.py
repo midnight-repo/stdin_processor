@@ -5,7 +5,6 @@ from typing import List, Tuple
 from stdin_processor.processor import STDIN
 from stdin_processor import global_args
 from stdin_processor.processor import backslashed
-from pathlib import Path
 
 def _remove(line, **kwargs):
     charset = kwargs.get('charset', None)
@@ -34,7 +33,7 @@ def _remove(line, **kwargs):
 
 
 
-def remove(regex: List[Path,] = typer.Option(None, '--regex', '-e', metavar='REGEX', help='The regexes to remove from stdin. Can be used multiple times'),
+def remove(regex: List[str] = typer.Option(None, '--regex', '-e', metavar='REGEX', help='The regexes to remove from stdin. Can be used multiple times'),
            # strings: List[Path] = typer.Option(None, '--string', '-s', metavar='STRING', help='Remove string from stdin. Can be used multiple times'),
            charset: str = typer.Option(None, '--charset', '-c', metavar='STRING', help='The charset to remove from stdin'),
            remove_ignore_case: bool = typer.Option(False, '--ic', '--rI', help='Ignore case for targets to remove, do not confuse with -I that is used with global option --where'),
@@ -61,7 +60,7 @@ def remove(regex: List[Path,] = typer.Option(None, '--regex', '-e', metavar='REG
     stdin = STDIN()
     # add this and uncomment in _remove() function to add support for strings
     # strings = map(lambda posisxp: posisxp.name, strings)
-    stdin.process(lambda x: _remove(x, reg_expressions=map(lambda posisxp: posisxp.name, regex), charset=charset, ignore_case=remove_ignore_case),
+    stdin.process(lambda x: _remove(x, reg_expressions=regex, charset=charset, ignore_case=remove_ignore_case),
                   separators=separators,
                   clean=clean,
                   group_by=group_by,
