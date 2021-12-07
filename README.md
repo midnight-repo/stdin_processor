@@ -15,7 +15,7 @@ It is fully written in python3, making it availiable on Linux, Windows, MacOS, a
   - [Mapping](#mapping)
   - [Detailed steps](#detailed-steps)
 
-[Usage examples](#usage-examples) (STILL IN PROGRESS)
+[Usage examples](#usage-examples) (NOT YET IMPLEMENTED)
 
 ## Installation
 Using pip or pip3 :
