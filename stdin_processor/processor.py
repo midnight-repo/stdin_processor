@@ -297,12 +297,11 @@ class STDIN():
         if rotation != 0:
             val = deque(self.value)
             val.rotate(rotation)
-            self.value = val
+            self.value = list(val)
 
         # needs to be there for enum
         if shuffle:
             random.shuffle(self.value)
-
 
         self.match(*where, ignore_case=ignore_case, index_pattern=indexes, keep=keep, _not=_not)
 
@@ -311,11 +310,9 @@ class STDIN():
         if unique:
             self.remove_duplicates()
 
-
         # before or after processing ? if prepend --where for exemple
         if sort != 'False':
             self.sort(sort, sort_key=sort_key)
-
 
         self.join(joiner)
 

@@ -73,7 +73,8 @@ sort_key = typer.Option('',
                    help='Key to use when sorting. If used, the output will be sort depending on what the regex match on each element')
 
 
-shuffle = typer.Option(False, help='Change the order of stdin elements to a random one')
+shuffle = typer.Option(False,
+                       help='Change the order of stdin elements to a random one')
 
 
 index = typer.Option('0:',
@@ -83,7 +84,11 @@ index = typer.Option('0:',
                      show_default=False,
                      metavar='INDEXES')
 
-rotation = typer.Option(0, '--rotation', '--rot', metavar='INT', help='Rotate stdin up (-) or down (+)'),
+rotation = typer.Option(0,
+                        '--rotation',
+                        '--rot',
+                        metavar='INT',
+                        help='Rotate stdin up (-) or down (+)')
 
 
 args_separator = typer.Option('',
