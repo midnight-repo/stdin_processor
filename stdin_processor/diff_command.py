@@ -37,6 +37,8 @@ def diff(command: str = typer.Argument(..., help='the command to substract to st
          shuffle: bool = global_args.shuffle,
          keep: bool = global_args.keep,
          where: List[str] = global_args.where,
+         start_where: str = global_args.start_where,
+         stop_where: str = global_args.stop_where,
          indexes: str = global_args.index,
          _not: bool = global_args._not,
          rotation: int = global_args.rotation,
@@ -50,6 +52,7 @@ def diff(command: str = typer.Argument(..., help='the command to substract to st
         val = deque(stdin.value)
         val.rotate(rotation)
         stdin.value = val
+    stdin.between(start_where, stop_where)
     if shuffle:
         random.shuffle(stdin.value)
     stdin.match(*where, ignore_case=ignore_case, index_pattern=indexes, keep=keep, _not=_not)
@@ -69,6 +72,7 @@ def diff(command: str = typer.Argument(..., help='the command to substract to st
         val = deque(command_output.value)
         val.rotate(rotation)
         command_output.value = val
+    stdin.between(start_where, stop_where)
     if shuffle:
         random.shuffle(command_output.value)
     command_output.match(*where, ignore_case=ignore_case, index_pattern=indexes, keep=keep, _not=_not)

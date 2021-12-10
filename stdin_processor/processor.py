@@ -268,7 +268,21 @@ class STDIN():
         self.value = processed
         return self.value
 
+    def between(self, start_regex, stop_regex):
 
+        btween = []
+        start = False
+        stop = False
+
+        for element in self.value:
+            if re.match(start_regex, element): start = True
+            if re.match(stop_regex, element): stop = True
+
+            if start and not stop:
+                btween.append(element)
+
+        self.value = btween
+        return self.value
 
     def process(self, map_function, **kwargs):
         separators = kwargs.get('separators', ['\n'])
@@ -279,6 +293,8 @@ class STDIN():
         shuffle = kwargs.get('shuffle')
         sort = kwargs.get('sort', False)
         sort_key = kwargs.get('sort_key', None)
+        start_where = kwargs.get('start_where')
+        stop_where = kwargs.get('stop_where')
         keep = kwargs.get('keep', '')
         where = kwargs.get('where', ['.*|\n*|\r*|\t*'])
         indexes = kwargs.get('indexes', '0:')
@@ -298,6 +314,10 @@ class STDIN():
             val = deque(self.value)
             val.rotate(rotation)
             self.value = list(val)
+
+
+
+        self.between(start_where, stop_where)
 
         # needs to be there for enum
         if shuffle:

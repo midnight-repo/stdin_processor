@@ -20,6 +20,8 @@ def hide(
         shuffle: bool = global_args.shuffle,
         keep: bool = global_args.keep,
         where: List[str] = global_args.where,
+        start_where: str = global_args.start_where,
+        stop_where: str = global_args.stop_where,
         indexes: str = global_args.index,
         rotation: int = global_args.rotation,
         _not: bool = global_args._not,
@@ -55,6 +57,10 @@ def hide(
         val = deque(stdin.value)
         val.rotate(rotation)
         stdin.value = val
+
+
+    stdin.between(start_where, stop_where)
+
     if shuffle:
         random.shuffle(stdin.value)
 

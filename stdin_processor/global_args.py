@@ -1,5 +1,6 @@
 import typer
-
+import random
+import string as chars
 #/!\ ADDING typer.style() instead of ARGS MAKES THEM NOT DETECTABLE BY ARGPARSER !
 
 
@@ -72,6 +73,15 @@ sort_key = typer.Option('',
                    metavar='REGEX',
                    help='Key to use when sorting. If used, the output will be sort depending on what the regex match on each element')
 
+start_where = typer.Option('.*\n*\r*\t*',
+                     '--start', '--staw',
+                     metavar='REGEX',
+                     help='Start STDIN where REGEX is matched')
+
+stop_where = typer.Option('!_-<\{\[\(==!-%s-!==\)\]\}>-_!' % ''.join([random.choice(chars.ascii_letters + chars.digits) for i in range(64)]),
+                    '--stop-where', '--stow',
+                    metavar='REGEX',
+                    help='Stops STDIN where REGEX is matched')
 
 shuffle = typer.Option(False,
                        help='Change the order of stdin elements to a random one')
