@@ -55,6 +55,7 @@ def replace(replacement: str = typer.Argument(''),
             indexes: str = global_args.index,
             _not: bool = global_args._not,
             rotation: int = global_args.rotation,
+            reverse: bool = global_args.reverse,
             ignore_case: bool = global_args.ignore_case
             ):
 
@@ -78,6 +79,7 @@ def replace(replacement: str = typer.Argument(''),
                   ignore_case=ignore_case,
                   indexes=indexes,
                   rotation=rotation,
+                  reverse=reverse,
                   joiner=join)
 
     print(stdin.value, end='' if stdin.value.endswith('\n') else '\n')

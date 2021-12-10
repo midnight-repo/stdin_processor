@@ -22,6 +22,7 @@ def prepend(prefix: str = typer.Argument(..., help='The prefix to prepend to eve
             indexes: str = global_args.index,
             _not: bool = global_args._not,
             rotation: int = global_args.rotation,
+            reverse: bool = global_args.reverse,
             ignore_case: bool = global_args.ignore_case
             ):
     stdin = STDIN(sys.stdin.read())
@@ -42,6 +43,7 @@ def prepend(prefix: str = typer.Argument(..., help='The prefix to prepend to eve
                   ignore_case=ignore_case,
                   indexes=indexes,
                   rotation=rotation,
+                  reverse=reverse,
                   joiner=join)
 
     print(stdin.value, end='' if stdin.value.endswith('\n') else '\n')

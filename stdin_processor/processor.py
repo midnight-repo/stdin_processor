@@ -145,6 +145,11 @@ class STDIN():
         return self.value
 
 
+    def reverse(self):
+        r = list(reversed(self.value))
+        self.value = r
+        return self.value
+
 
     # WHAT IT DOES : sorts self.value in the order provided in the order_pattern which must contain
     #   - one uppercase char
@@ -301,6 +306,7 @@ class STDIN():
         _not = kwargs.get('_not', False)
         ignore_case = kwargs.get('ignore_case', False)
         rotation = kwargs.get('rotation', 0)
+        reverse = kwargs.get('reverse')
         joiner = kwargs.get('joiner', '\n')
 
 
@@ -329,6 +335,9 @@ class STDIN():
 
         if unique:
             self.remove_duplicates()
+
+        if reverse:
+            self.reverse()
 
         # before or after processing ? if prepend --where for exemple
         if sort != 'False':

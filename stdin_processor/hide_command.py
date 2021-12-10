@@ -25,7 +25,8 @@ def hide(
         indexes: str = global_args.index,
         rotation: int = global_args.rotation,
         _not: bool = global_args._not,
-        ignore_case: bool = global_args.ignore_case
+        ignore_case: bool = global_args.ignore_case,
+        reverse: bool = global_args.reverse,
 ):
 
 
@@ -70,6 +71,8 @@ def hide(
         stdin.value.remove(random_val)
     if unique:
         stdin.remove_duplicates()
+    if reverse:
+        stdin.reverse()
     if sort != 'False':
         stdin.sort(sort, sort_key=sort_key)
     stdin.join(join)

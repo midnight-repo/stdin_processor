@@ -42,6 +42,7 @@ def diff(command: str = typer.Argument(..., help='the command to substract to st
          indexes: str = global_args.index,
          _not: bool = global_args._not,
          rotation: int = global_args.rotation,
+         reverse: bool = global_args.reverse,
          ignore_case: bool = global_args.ignore_case
          ):
     stdin = STDIN(sys.stdin.read())
@@ -59,6 +60,8 @@ def diff(command: str = typer.Argument(..., help='the command to substract to st
     stdin.map(lambda x: x)
     if unique:
         stdin.remove_duplicates()
+    if reverse:
+        stdin.reverse()
     if sort != 'False':
         stdin.sort(sort, sort_key=sort_key)
 
@@ -79,6 +82,8 @@ def diff(command: str = typer.Argument(..., help='the command to substract to st
     command_output.map(lambda x: x)
     if unique:
         command_output.remove_duplicates()
+    if reverse:
+        stdin.reverse()
     if sort != 'False':
         command_output.sort(sort, sort_key=sort_key)
 

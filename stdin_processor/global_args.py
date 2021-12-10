@@ -83,6 +83,9 @@ stop_where = typer.Option('!_-<\{\[\(==!-%s-!==\)\]\}>-_!' % ''.join([random.cho
                     metavar='REGEX',
                     help='Stops STDIN where REGEX is matched')
 
+reverse = typer.Option(False, '--reversed', '-r', help='Reverses the STDIN')
+
+
 shuffle = typer.Option(False,
                        help='Change the order of stdin elements to a random one')
 

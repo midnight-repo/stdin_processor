@@ -22,6 +22,7 @@ def show(
         indexes: str = global_args.index,
         rotation: int = global_args.rotation,
         _not: bool = global_args._not,
+        reverse: bool = global_args.reverse,
         ignore_case: bool = global_args.ignore_case
 ):
 
@@ -44,6 +45,7 @@ def show(
                   ignore_case=ignore_case,
                   indexes=indexes,
                   rotation=rotation,
+                  reverse=reverse,
                   joiner=join)
 
     print(stdin.value, end='' if stdin.value.endswith('\n') else '\n')
