@@ -68,23 +68,26 @@ To view help for any command :
     sp <command> --help
 
 Currently availiable subcommands :
+  append
+  decode
+  diff
+  encode
+  enum
+  hash
+  hide
+  lower
+  prepend
+  remove
+  replace
+  reverse
+  rotate
+  show
+  split
+  strip
+  style
+  upper
+  wrap
 
--  append
--  decode
--  encode
--  enum
--  hash
--  hide
--  lower
--  prepend
--  remove
--  replace
--  reverse
--  show
--  split
--  strip
--  upper
--  wrap
 
 
 ## How it works
